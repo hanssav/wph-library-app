@@ -1,5 +1,7 @@
 import { store } from '@/store';
+import { setCredentials } from '@/store/slices';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
 type Props = {
@@ -21,6 +23,20 @@ const queryClient = new QueryClient({
 });
 
 const AppProvider = ({ children }: Props) => {
+  React.useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsed = JSON.parse(user);
+
+      store.dispatch(
+        setCredentials({
+          token: parsed.token,
+          user: parsed.user,
+        })
+      );
+    }
+  }, []);
+
   return (
     <ReduxProvider store={store}>
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

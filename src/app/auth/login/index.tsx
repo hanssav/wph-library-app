@@ -12,10 +12,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { LoginRequestSchema, type LoginRequest } from '@/schema';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useLogin } from '@/hooks';
+import { useBooks, useLogin } from '@/hooks';
 
 const Login = () => {
   const login = useLogin();
+
+  const { data } = useBooks();
+
+  console.log(data, 'data');
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
     defaultValues: {
@@ -39,7 +43,7 @@ const Login = () => {
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input placeholder='email' {...field} />
+                  <Input placeholder='email' {...field} autoComplete='email' />
                 </FormControl>
                 <FormDescription>
                   This is your public display name.

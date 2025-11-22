@@ -1,6 +1,7 @@
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
 import { APIConfiguration } from './config';
 import { store } from '@/store';
+import { clearAuth } from '@/store/slices';
 
 export const apiInstance = axios.create({
   baseURL: APIConfiguration.baseUrl,
@@ -9,29 +10,23 @@ export const apiInstance = axios.create({
   },
 });
 
-// ==== USE TOKEN FRON STORE EVERY REQUEST ====
-
-// REQUEST INTERCEPTOR
 apiInstance.interceptors.request.use((config) => {
-  const state = store.getState();
-  const token = state.auth.token;
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  const token = store.getState().auth.token;
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// RESPONSE INTERCEPTOR (refresh token)
-// apiInstance.interceptors.response.use(
-//   (res) => res,
-//   async (error) => {
-//     if (error.response?.status === 401) {
-//       store.dispatch({ type: 'auth/logout' });
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// Response Interceptor  →automatic logout 401
+apiInstance.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response?.status === 401) {
+      store.dispatch(clearAuth());
+      localStorage.clear();
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const apiService = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {

@@ -14,7 +14,12 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: (req: LoginRequest) => authService.login(req),
-    onSuccess: (res: LoginSuccessResponse) =>
-      dispatch(setCredentials({ token: res.data.token, user: res.data.user })),
+    onSuccess: (res: LoginSuccessResponse) => {
+      const user = { token: res.data.token, user: res.data.user };
+
+      dispatch(setCredentials(user));
+      localStorage.setItem('token', user.token);
+      localStorage.setItem('user', JSON.stringify(user));
+    },
   });
 };
