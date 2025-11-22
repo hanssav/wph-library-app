@@ -1,10 +1,13 @@
 import './App.css';
 import AppProvider from './providers/app-providers';
+import Login from './app/auth/login';
 
 function App() {
   return (
     <div className='bg-white min-h-screen'>
-      <AppProvider>our component</AppProvider>
+      <AppProvider>
+        <Login />
+      </AppProvider>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
 import { APIConfiguration } from './config';
+import { store } from '@/store';
 
 export const apiInstance = axios.create({
   baseURL: APIConfiguration.baseUrl,
@@ -8,20 +9,29 @@ export const apiInstance = axios.create({
   },
 });
 
-// ==== USE TOKEN FRON STORAGE EVERY REQUEST ====
-apiInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken');
+// ==== USE TOKEN FRON STORE EVERY REQUEST ====
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
+// REQUEST INTERCEPTOR
+apiInstance.interceptors.request.use((config) => {
+  const state = store.getState();
+  const token = state.auth.token;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+});
+
+// RESPONSE INTERCEPTOR (refresh token)
+// apiInstance.interceptors.response.use(
+//   (res) => res,
+//   async (error) => {
+//     if (error.response?.status === 401) {
+//       store.dispatch({ type: 'auth/logout' });
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export const apiService = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
