@@ -9,7 +9,7 @@ import {
   AuthContainer,
   AuthContainerButtonFooter,
   TextLoading,
-} from '../partials';
+} from '../components';
 import { registerSection, registerFields } from '../auth.constants';
 import { useNavigate } from 'react-router-dom';
 import { AUTH_PATH } from '@/lib/constants';
