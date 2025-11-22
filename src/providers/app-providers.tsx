@@ -3,6 +3,7 @@ import { setCredentials } from '@/store/slices';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
+import { Toaster } from 'sonner';
 
 type Props = {
   children: React.ReactNode;
@@ -39,7 +40,11 @@ const AppProvider = ({ children }: Props) => {
 
   return (
     <ReduxProvider store={store}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+
+        <Toaster richColors position='top-right' />
+      </QueryClientProvider>
     </ReduxProvider>
   );
 };

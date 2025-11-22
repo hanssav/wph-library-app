@@ -1,10 +1,10 @@
-import AppProvider from './providers/app-providers';
+import AppProvider from '../providers/app-providers';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './app/auth/login';
-import AuthLayout from './app/auth/layout';
-import Register from './app/auth/register';
-import UserLayout from './app/user/layout';
-import Home from './app/user/home';
+import Login from './auth/login';
+import AuthLayout from './auth/layout';
+import Register from './auth/register';
+import UserLayout from './user/layout';
+import Home from './user/home';
 
 function App() {
   return (

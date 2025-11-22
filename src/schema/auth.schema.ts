@@ -11,16 +11,5 @@ export const LoginRequestSchema = z.object({
   password: z.string().min(1, 'Password wajib diisi'),
 });
 
-export const LoginSuccessResponseSchema = z.object({
-  token: z.string(),
-  user: z.object({
-    id: z.number(),
-    name: z.string(),
-    email: z.string(),
-    role: z.enum(['ADMIN', 'USER']),
-  }),
-});
-
 export type RegisterRequest = z.infer<typeof RegisterRequestSchema>;
 export type LoginRequest = z.infer<typeof LoginRequestSchema>;
-export type LoginSuccessResponse = z.infer<typeof LoginSuccessResponseSchema>;
