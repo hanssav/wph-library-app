@@ -33,7 +33,8 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <>
+      <h1 className='text-display-2xl-bold'> HAI</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -41,7 +42,9 @@ const Login = () => {
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className='text-display-lg-extrabold text-primary-500'>
+                  Username
+                </FormLabel>
                 <FormControl>
                   <Input placeholder='email' {...field} autoComplete='email' />
                 </FormControl>
@@ -73,7 +76,7 @@ const Login = () => {
           </Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 };
 
