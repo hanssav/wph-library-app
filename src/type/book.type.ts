@@ -1,3 +1,4 @@
+import type { ApiResponse, Pagination } from './api.type';
 import type { Author } from './author.type';
 
 export type BookRecomendationParams = {
@@ -50,21 +51,10 @@ export type Book = {
   category: BookCategory;
 };
 
-export type BookPagination = {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-};
-
-export type BookListResponse = {
-  success: boolean;
-  message: string;
-  data: {
-    books: Book[];
-    pagination: BookPagination;
-  };
-};
+export type BookListResponse = ApiResponse<{
+  books: Book[];
+  pagination: Pagination;
+}>;
 
 export type BookRecomendationData = {
   mode: 'rating' | 'popular';
@@ -76,3 +66,18 @@ export type BookRecomendationResponse = {
   message: string;
   data: BookRecomendationData;
 };
+
+export type BookDetail = Book & {
+  reviews: Array<{
+    id: number;
+    star: number;
+    comment: string;
+    createdAt: string;
+    user: {
+      id: number;
+      name: string;
+    };
+  }>;
+};
+
+export type BookDetailApiResponse = ApiResponse<BookDetail>;

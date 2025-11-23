@@ -5,11 +5,16 @@ import type {
   BookRecomendationResponse,
   BookSearchParams,
 } from '@/type';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 export const bookKeys = {
   all: (params?: BookSearchParams) => ['books', params],
   recomend: (params?: BookRecomendationParams) => ['books', 'recomend', params],
+  id: (id: number) => ['book', id],
 };
 
 export const useBooksInfinite = (params?: BookSearchParams) => {
@@ -40,4 +45,15 @@ export const useBooksRecomend = (params?: BookRecomendationParams) => {
     queryKey: bookKeys.recomend(params),
     queryFn: () => bookService.getRecomendation(params),
   });
+};
+
+export const usePrefetchBook = (id: number) => {
+  const queryClient = useQueryClient();
+
+  return () => {
+    queryClient.prefetchQuery({
+      queryKey: bookKeys.id(id),
+      queryFn: () => bookService.getId(id),
+    });
+  };
 };

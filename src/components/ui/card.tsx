@@ -81,7 +81,7 @@ function CardImage({ ...props }: CardImageProps) {
       className={cn(
         'w-full h-full object-cover',
         variant == 'category' && 'aspect-square size-[45px] lg:size-[52px]',
-        variant == 'book' && 'w-full aspect-3/4 object-cover'
+        variant == 'book' && 'w-full aspect-2/3 object-cover'
       )}
       {...props}
     />

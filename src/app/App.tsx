@@ -5,6 +5,7 @@ import AuthLayout from './auth/layout';
 import Register from './auth/register';
 import UserLayout from './user/layout';
 import Home from './user/home';
+import BooksDetail from './user/books/detail';
 
 function App() {
   return (
@@ -12,8 +13,13 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<UserLayout />}>
-            <Route path='/' element={<Home />}></Route>
+            <Route index element={<Home />}></Route>
+
+            <Route path='books'>
+              <Route path=':id' element={<BooksDetail />} />
+            </Route>
           </Route>
+
           <Route path='/auth' element={<AuthLayout />}>
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />

@@ -1,3 +1,5 @@
+import type { ApiResponse } from './api.type';
+
 export type UserRole = 'ADMIN' | 'USER';
 
 export type AuthUser = {
@@ -11,24 +13,16 @@ export type AuthUser = {
 // REGISTER RESPONSE
 // ======================
 
-export type RegisterSuccessResponse = {
-  success: true;
-  message: 'Registered';
-  data: AuthUser;
-};
+export type RegisterSuccessResponse = ApiResponse<AuthUser>;
 
 // ======================
 // LOGIN RESPONSE
 // ======================
 
-export type LoginSuccessResponse = {
-  success: true;
-  message: 'Logged in';
-  data: {
-    token: string;
-    user: AuthUser;
-  };
-};
+export type LoginSuccessResponse = ApiResponse<{
+  token: string;
+  user: AuthUser;
+}>;
 
 // ======================
 // ERROR RESPONSE

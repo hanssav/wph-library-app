@@ -11,6 +11,8 @@ import {
   CardRating,
 } from '../ui/card';
 import { Button } from '../ui/button';
+import { usePrefetchBook } from '@/hooks';
+import { useNavigate } from 'react-router-dom';
 
 const BooksList = ({
   children,
@@ -31,8 +33,20 @@ const BooksList = ({
 };
 
 const BookCard = ({ book }: { book: Book }) => {
+  const navigate = useNavigate();
+  const prefetchBook = usePrefetchBook(book.id);
+
+  const handleClick = () => {
+    navigate(`/books/${book.id}`);
+  };
+
   return (
-    <Card variant={'book'} key={book.id}>
+    <Card
+      variant={'book'}
+      key={book.id}
+      onMouseEnter={prefetchBook}
+      onClick={handleClick}
+    >
       <CardImageWrapper>
         <CardImage src={getImage(book.coverImage)} alt={book.title} />
       </CardImageWrapper>

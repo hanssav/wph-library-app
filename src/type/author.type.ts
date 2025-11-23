@@ -1,10 +1,4 @@
-export type AuthorsResponse = {
-  success: boolean;
-  message: string;
-  data: {
-    authors: Author[];
-  };
-};
+import type { ApiResponse } from './api.type';
 
 export type Author = {
   id: number;
@@ -13,3 +7,7 @@ export type Author = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type AuthorsResponse = ApiResponse<{
+  authors: Author[];
+}>;
