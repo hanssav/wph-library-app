@@ -1,3 +1,4 @@
 import UserNavbar from './navbar';
+import UserFooter from './footer';
 
-export { UserNavbar };
+export { UserNavbar, UserFooter };

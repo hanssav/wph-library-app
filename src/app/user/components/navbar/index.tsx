@@ -23,8 +23,8 @@ const UserNavbar = () => {
 
   const isLoggedIn = Boolean(token);
   return (
-    <div className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
-      <header className='container flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
+    <header className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
+      <div className='container-x flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
         <div className='relative overflow-hidden size-10 md:w-auto md:size-11'>
           <img
             src={IMAGES.LOGO}
@@ -33,7 +33,6 @@ const UserNavbar = () => {
             loading='lazy'
           />
         </div>
-
         <div
           className={cn(
             'relative flex-1 max-w-[500px]',
@@ -128,8 +127,8 @@ const UserNavbar = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 };
 
