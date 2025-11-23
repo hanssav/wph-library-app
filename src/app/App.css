@@ -256,11 +256,11 @@ html {
 }
 
 @utility container-y {
-  @apply py-10 md:py-20 lg:py-[120px];
+  @apply py-4 md:py-20;
 }
 
 @utility base-container {
-  @apply max-w-302 mx-auto my-0 px-6 py-10 md:py-20 lg:py-[120px];
+  @apply max-w-302 mx-auto my-0 px-6 py-6 md:py-20 flex flex-col justify-start items-start gap-4 lg:gap-12;
 }
 
 @utility shadow-card {

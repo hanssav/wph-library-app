@@ -1,4 +1,3 @@
-import { getErrorMessage } from '@/api';
 import type { LoginRequest, RegisterRequest } from '@/schema';
 import { authService } from '@/service/auth.service';
 import { useAppDispatch } from '@/store';
@@ -33,9 +32,6 @@ export const useLogin = () => {
 
       toast.success('Login successful!');
     },
-    onError: (err) => {
-      toast.error(getErrorMessage(err));
-    },
   });
 };
 
@@ -43,5 +39,4 @@ export const useRegister = () =>
   useMutation({
     mutationFn: (req: RegisterRequest) => authService.register(req),
     onSuccess: () => toast.info('Registration successful! Please log in.'),
-    onError: (err) => toast.error(getErrorMessage(err)),
   });

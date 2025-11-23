@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown, HandbagIcon, Menu, Search, X } from 'lucide-react';
 import { userMenu } from './navbar.constants';
-import { cn } from '@/lib/utils';
+import { avatarImage, cn, getImage } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store';
@@ -88,7 +88,7 @@ const UserNavbar = () => {
                 <span className='px-0 md:flex-center md:gap-4'>
                   <Avatar className='size-10 md:size-12 cursor-pointer'>
                     <AvatarImage
-                      src='https://github.com/shadcn.png'
+                      src={getImage(avatarImage, 'avatar')}
                       alt={`@${user?.name}`}
                     />
                   </Avatar>

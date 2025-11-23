@@ -1,3 +1,11 @@
+import type { Author } from './author.type';
+
+export type BookRecomendationParams = {
+  by?: 'rating' | 'popular'; // default: rating
+  categoryId?: number;
+  limit?: number; // default: 10
+};
+
 export type BookSearchParams = {
   /** Search by title or keyword */
   q?: string;
@@ -13,14 +21,6 @@ export type BookSearchParams = {
 
   /** Number of items per page */
   limit?: number;
-};
-
-export type BookAuthor = {
-  id: number;
-  name: string;
-  bio: string;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type BookCategory = {
@@ -46,7 +46,7 @@ export type Book = {
   categoryId: number;
   createdAt: string;
   updatedAt: string;
-  author: BookAuthor;
+  author: Author;
   category: BookCategory;
 };
 
@@ -64,4 +64,15 @@ export type BookListResponse = {
     books: Book[];
     pagination: BookPagination;
   };
+};
+
+export type BookRecomendationData = {
+  mode: 'rating' | 'popular';
+  books: Book[];
+};
+
+export type BookRecomendationResponse = {
+  success: boolean;
+  message: string;
+  data: BookRecomendationData;
 };
