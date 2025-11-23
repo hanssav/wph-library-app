@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom';
+import { UserNavbar } from './components';
 
 const UserLayout = () => {
   return (
-    <div className='flex min-h-screen items-center justify-center'>
+    <div className='min-h-screen'>
+      <UserNavbar />
       <Outlet />
     </div>
   );

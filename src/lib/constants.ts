@@ -4,3 +4,9 @@ export const AUTH_PATH = {
 };
 
 export const HOME_PATH = '/';
+
+import logo from '@/assets/logo.svg';
+
+export const IMAGES = {
+  LOGO: logo,
+};

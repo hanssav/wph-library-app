@@ -1,9 +1,9 @@
 import React from 'react';
-import logo from '@/assets/logo.svg';
 import type { BaseComponentProps } from '@/type';
 import type { AuthSectionProps } from '../type';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { IMAGES } from '@/lib/constants';
 
 type AuthContainerProps = Omit<AuthSectionProps, 'footer'> & BaseComponentProps;
 
@@ -14,9 +14,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
 }) => {
   return (
     <div className='w-full md:max-w-[27.78vw] space-y-5'>
-      <div>
-        <img src={logo} alt='Logo' width={122} />
-      </div>
+      <img src={IMAGES.LOGO} alt='Logo' width={122} />
       <div className='space-y-0.5'>
         <h1 className='text-display-xs-bold md:text-display-sm-bold'>
           {title}
