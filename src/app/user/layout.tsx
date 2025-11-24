@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { UserFooter, UserNavbar } from './components';
+import { UserFooter, UserNavbar } from '@/components/pages/user';
 
 const UserLayout = () => {
   return (

@@ -21,40 +21,50 @@ import { Button } from '@/components/ui/button';
 import type { BookSearchParams } from '@/type';
 import React from 'react';
 import ButtonActions from './components/button-actions';
+import DetailInfoLoading from './components/loading/detail-info-skeleton';
 
 const BooksDetail = () => {
   const { id } = useParams();
-  const { data } = useBook(Number(id));
-
-  let limit = 5;
+  const { data, isLoading: isBookLoading } = useBook(Number(id));
+  const limit = 5;
   const [params] = React.useState<BookSearchParams>({ limit });
-  const { data: booksData, isLoading: booksLoading } = useBooksInfinite(params);
+  const { data: booksData, isLoading: isBooksLoading } =
+    useBooksInfinite(params);
 
   const book = data?.data;
-  if (!book) return null; // add loading state in this conditon
+  const books = booksData?.pages.flatMap((res) => res.data.books);
+
+  if (isBookLoading) {
+    return <DetailInfoLoading />;
+  }
+
+  if (!book) {
+    return (
+      <div className='base-container'>
+        <p>Book not found</p>
+      </div>
+    );
+  }
+
   const { description, title, coverImage, Category, Author, rating, Review } =
     book;
-
-  const books = booksData?.pages.flatMap((res) => res.data.books);
 
   return (
     <div className='base-container'>
       <section className='flex-col-start gap-4 md:gap-6 w-full'>
         <BreadcrumbsDetail book={title} />
-
-        <div id='detail' className='flex flex-col md:flex-row md:mx-0 gap-8'>
+        <div className='flex flex-col md:flex-row md:mx-0 gap-8'>
           <div className='flex-center'>
             <BookImage coverImage={coverImage} />
           </div>
           <div className='flex-col-start flex-1 gap-4 md:gap-5'>
             <div className='space-y-3 md:space-y-[22px]'>
               <BookInfo
-                author={Author?.name}
+                author={Author?.name || 'Unknown'}
                 categoryName={Category.name}
                 bookTitle={title}
                 rating={rating}
               />
-
               <BookStats book={book} />
               <BookDesc desc={description} />
             </div>
@@ -72,22 +82,19 @@ const BooksDetail = () => {
         }
       >
         <ReviewList>
-          {Review &&
-            Review.length > 0 &&
-            Review.map((review) => (
-              <ReviewItem key={review.id} review={review} />
-            ))}
+          {Review?.map((review) => (
+            <ReviewItem key={review.id} review={review} />
+          ))}
         </ReviewList>
         <div className='w-full flex-center'>
           <Button variant={'outline'}>Load More</Button>
         </div>
-        {/* <LoadMoreButton /> */}
       </SectionWrapper>
       <Hr />
       <SectionWrapper title='Related Books'>
         <BooksList>
           <QueryStateComp
-            isLoading={booksLoading}
+            isLoading={isBooksLoading}
             skeleton={
               <>
                 {Array.from({ length: limit }).map((_, idx) => (
@@ -102,6 +109,7 @@ const BooksDetail = () => {
           </QueryStateComp>
         </BooksList>
       </SectionWrapper>
+
       <ButtonActions isMobile />
     </div>
   );
