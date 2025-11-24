@@ -59,3 +59,17 @@ export type MeResponseData = {
 };
 
 export type MeApiResponse = ApiResponse<MeResponseData>;
+
+export type UpdateProfileResponseData = {
+  profile: AuthUser;
+};
+
+export type UpdateProfileRequest = {
+  name: string;
+};
+
+export type UpdateProfileApiResponse = {
+  success: true;
+  message: 'Profile updated' | string;
+  data: UpdateProfileResponseData;
+};

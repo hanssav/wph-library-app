@@ -13,3 +13,9 @@ export const LoginRequestSchema = z.object({
 
 export type RegisterRequest = z.infer<typeof RegisterRequestSchema>;
 export type LoginRequest = z.infer<typeof LoginRequestSchema>;
+
+export const UpdateProfileSchema = z.object({
+  name: z.string().min(2, 'Name minimal 2 karakter'),
+});
+
+export type UpdateProfileReq = z.infer<typeof UpdateProfileSchema>;
