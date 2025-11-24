@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card } from '@/components/ui/card';
-import Hr from '@/components/ui/hr';
+import { Hr } from '@/components/ui/hr';
 import SectionWrapper from '@/components/container/section-wrapper';
 
 const DetailInfoLoading = () => {

@@ -1,6 +1,6 @@
+import React from 'react';
 import { BookInfiniteList, SectionWrapper } from '@/components/container';
 import type { BookSearchParams } from '@/type';
-import React from 'react';
 import SelectFilter from './components/select-filter';
 import {
   FilterCheckboxItem,
@@ -9,7 +9,7 @@ import {
   RatingFilterItem,
 } from './components';
 import { CATEGORY_FILTERS } from './components/filter.costants';
-import Hr from '@/components/ui/hr';
+import { Hr } from '@/components/ui/hr';
 import { Card } from '@/components/ui/card';
 
 const BooksList = () => {
@@ -39,13 +39,11 @@ const BooksList = () => {
             </FilterSection>
           </Card>
         </aside>
-        <div className='lg:col-span-10'>
-          <BookInfiniteList
-            className='lg:grid-cols-4'
-            params={params}
-            isInfinite={false}
-          />
-        </div>
+        <BookInfiniteList
+          className='lg:grid-cols-4 lg:col-span-10'
+          params={params}
+          isInfinite={false}
+        />
       </div>
     </SectionWrapper>
   );

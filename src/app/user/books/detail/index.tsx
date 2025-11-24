@@ -7,7 +7,7 @@ import {
   BookStats,
   BreadcrumbsDetail,
 } from './components/book-detail';
-import Hr from '@/components/ui/hr';
+import { Hr } from '@/components/ui/hr';
 import {
   BookCard,
   BookCardSkeleton,
