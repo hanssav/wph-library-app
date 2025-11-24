@@ -6,6 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { BOOK_PATH, HOME_PATH } from '@/lib/constants';
 import { ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -18,7 +19,7 @@ const BreadcrumbsDetail = ({ book }: { book: string }) => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to='/'>Home</Link>
+            <Link to={HOME_PATH}>Home</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>
@@ -26,7 +27,7 @@ const BreadcrumbsDetail = ({ book }: { book: string }) => {
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to='/category'>Books</Link>
+            <Link to={`${BOOK_PATH.INDEX}`}>Books</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {segments[0] === 'books' && segments[1] && (

@@ -13,6 +13,7 @@ import {
 import { Button } from '../ui/button';
 import { usePrefetchBook } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
+import { BOOK_PATH } from '@/lib/constants';
 
 const BooksList = ({
   children,
@@ -37,7 +38,7 @@ const BookCard = ({ book }: { book: Book }) => {
   const prefetchBook = usePrefetchBook(book.id);
 
   const handleClick = () => {
-    navigate(`/books/${book.id}`);
+    navigate(`${BOOK_PATH.INDEX}/${book.id}`);
   };
 
   return (
