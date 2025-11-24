@@ -4,6 +4,7 @@ import QueryStateComp from './query-state';
 import { BooksList, BookCard, LoadMoreButton } from './books';
 import { AuthorCard, AuthorsList } from './author';
 import StarrRating from './star-rating';
+import { BookInfiniteList } from './book-infinite-list';
 
 import AuthorCardSkeleton from './author-skeletron';
 import BookCardSkeleton from './book-skeleton';
@@ -22,4 +23,5 @@ export {
   AuthorCard,
   AuthorsList,
   StarrRating,
+  BookInfiniteList,
 };

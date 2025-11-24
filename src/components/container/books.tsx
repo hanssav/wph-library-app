@@ -1,5 +1,5 @@
 import { cn, getImage } from '@/lib/utils';
-import type { Author, BaseComponentProps, Book } from '@/type';
+import type { BaseComponentProps, Book } from '@/type';
 import { type ComponentProps } from 'react';
 import {
   Card,
@@ -61,20 +61,16 @@ const BookCard = ({ book }: { book: Book }) => {
 };
 
 type LoadMoreButtonProps = {
-  author?: Author[] | null;
   isFetchingNextPage?: boolean;
   hasNextPage?: boolean;
   fetchNextPage?: () => void;
 };
 
 const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
-  author,
   isFetchingNextPage,
   hasNextPage,
   fetchNextPage,
 }) => {
-  if (!author) return null;
-
   return (
     <div className='w-full flex-center'>
       <Button

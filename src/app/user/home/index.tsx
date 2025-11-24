@@ -10,34 +10,21 @@ import {
   AuthorCard,
   AuthorCardSkeleton,
   AuthorsList,
-  BookCard,
-  BookCardSkeleton,
-  BooksList,
-  LoadMoreButton,
   QueryStateComp,
   SectionWrapper,
 } from '@/components/container';
 import type { BookSearchParams } from '@/type';
 import React from 'react';
-import { useBooksInfinite } from '@/hooks';
 import { useAuthors } from '@/hooks/use-author';
+import { BookInfiniteList } from '@/components/container/book-infinite-list';
 
 const Home = () => {
   const limit = 10;
   const [params] = React.useState<BookSearchParams>({ limit });
 
-  const {
-    data: booksData,
-    isLoading: booksLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useBooksInfinite(params);
-
   const { data: authorsData, isLoading: isAuthorLoading } = useAuthors();
 
   const authors = authorsData?.data.authors ?? [];
-  const books = booksData?.pages.flatMap((res) => res.data.books);
 
   return (
     <div className='base-container'>
@@ -53,28 +40,7 @@ const Home = () => {
         ))}
       </CategoryList>
       <SectionWrapper title='Recommendation'>
-        <BooksList>
-          <QueryStateComp
-            isLoading={booksLoading}
-            skeleton={
-              <>
-                {Array.from({ length: limit }).map((_, idx) => (
-                  <BookCardSkeleton key={idx} />
-                ))}
-              </>
-            }
-          >
-            {books?.map((book) => (
-              <BookCard book={book} key={book.id} />
-            ))}
-          </QueryStateComp>
-        </BooksList>
-        <LoadMoreButton
-          author={authors}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-        />
+        <BookInfiniteList params={params} />
       </SectionWrapper>
       <SectionWrapper title='Popular Authors'>
         <AuthorsList>

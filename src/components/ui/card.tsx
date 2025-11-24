@@ -21,6 +21,7 @@ export const cardVariants = cva('flex flex-col rounded-xl w-full shadow-card', {
       book: 'rounded-[12px]',
       author: 'gap-3 p-3 rounded-[12px] flex-row',
       review: 'p-4 gap-4',
+      base: 'bg-white border border-neutral-300 rounded-[12px] py-4 space-y-4 shadow-none!',
     },
   },
   defaultVariants: {
