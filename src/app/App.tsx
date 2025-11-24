@@ -7,6 +7,7 @@ import UserLayout from './user/layout';
 import Home from './user/home';
 import BooksDetail from './user/books/detail';
 import BooksList from './user/books/list';
+import Author from './user/author/id';
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
             <Route path='books'>
               <Route index element={<BooksList />} />
               <Route path=':id' element={<BooksDetail />} />
+            </Route>
+
+            <Route path='author'>
+              <Route path=':id' element={<Author />} />
             </Route>
           </Route>
 

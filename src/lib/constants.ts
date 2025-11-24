@@ -30,4 +30,8 @@ export const AUTH_PATH = {
   REGISTER: '/auth/register',
 };
 
+export const AUTHOR_PATH = {
+  INDEX: '/author',
+};
+
 export const HOME_PATH = '/';

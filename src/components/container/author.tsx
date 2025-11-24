@@ -4,6 +4,9 @@ import { type ComponentProps } from 'react';
 import { Card, CardContent, CardDescription, CardTitle } from '../ui/card';
 import { Avatar, AvatarImage } from '../ui/avatar';
 import { Album } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { usePrefetchAuthor } from '@/hooks/use-author';
+import { AUTHOR_PATH } from '@/lib/constants';
 
 type AuthorsListProps = BaseComponentProps & ComponentProps<'div'>;
 
@@ -21,9 +24,20 @@ const AuthorsList = ({ children, className, ...props }: AuthorsListProps) => {
   );
 };
 
-const AuthorCard = ({ author }: { author: Author }) => {
+const AuthorCard = ({
+  author,
+  ...props
+}: { author: Author } & ComponentProps<'div'>) => {
+  const navigate = useNavigate();
+  const prefetchAuthor = usePrefetchAuthor(author.id);
+
   return (
-    <Card variant={'author'}>
+    <Card
+      variant={'author'}
+      onMouseEnter={prefetchAuthor}
+      onClick={() => navigate(`${AUTHOR_PATH.INDEX}/${author.id}`)}
+      {...props}
+    >
       <Avatar className='size-[60px]'>
         {/* no image avatar from backend */}
         <AvatarImage src={getImage(author.name, 'avatar')} alt={author.name} />
