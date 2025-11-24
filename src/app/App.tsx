@@ -11,8 +11,9 @@ import Author from './user/author/id';
 import Cart from './user/cart';
 import Checkout from './user/checkout';
 import Profile from './user/profile';
-import Reviews from './user/reviews';
-import BorrowedList from './user/borrowed-list';
+import Reviews from './user/profile/reviews';
+import BorrowedList from './user/profile/borrowed-list';
+import ProfileLayout from './user/profile/layout';
 
 function App() {
   return (
@@ -30,16 +31,15 @@ function App() {
             <Route path='author'>
               <Route path=':id' element={<Author />} />
             </Route>
-            <Route path='profile' element={<Profile />} />
+            <Route path='profile' element={<ProfileLayout />}>
+              <Route index element={<Profile />} />
+              <Route path='reviews' element={<Reviews />} />
+              <Route path='borrowed-list' element={<BorrowedList />} />
+            </Route>
 
             <Route path='cart' element={<Cart />} />
             {/* chceckout and checkout success */}
             <Route path='checkout' element={<Checkout />} />
-
-            {/* Posible deleted */}
-            <Route path='reviews' element={<Reviews />} />
-            <Route path='borrowed-list' element={<BorrowedList />} />
-            {/* Posible deleted */}
           </Route>
 
           <Route path='/auth' element={<AuthLayout />}>

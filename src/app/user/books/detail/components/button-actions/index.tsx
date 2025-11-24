@@ -9,7 +9,6 @@ const ButtonActions = ({
   className?: string;
   isMobile?: boolean;
 }) => {
-  console.log(isMobile, 'isMobile');
   return (
     <div
       className={cn(

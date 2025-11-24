@@ -10,7 +10,6 @@ import type { ReviewBook } from '@/type';
 import { Star } from 'lucide-react';
 
 const ReviewItem = ({ review }: { review: ReviewBook }) => {
-  console.log(review, 'review');
   return (
     <Card variant={'review'}>
       <div className='flex-start gap-3'>
