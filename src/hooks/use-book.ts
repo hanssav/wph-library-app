@@ -57,3 +57,9 @@ export const usePrefetchBook = (id: number) => {
     });
   };
 };
+
+export const useBook = (id: number) =>
+  useQuery({
+    queryKey: bookKeys.id(id),
+    queryFn: () => bookService.getId(id),
+  });

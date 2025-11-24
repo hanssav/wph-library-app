@@ -47,8 +47,8 @@ export type Book = {
   categoryId: number;
   createdAt: string;
   updatedAt: string;
-  author: Author;
-  category: BookCategory;
+  Author: Author;
+  Category: BookCategory;
 };
 
 export type BookListResponse = ApiResponse<{
@@ -67,17 +67,19 @@ export type BookRecomendationResponse = {
   data: BookRecomendationData;
 };
 
-export type BookDetail = Book & {
-  reviews: Array<{
+export type ReviewBook = {
+  id: number;
+  star: number;
+  comment: string;
+  createdAt: string;
+  User: {
     id: number;
-    star: number;
-    comment: string;
-    createdAt: string;
-    user: {
-      id: number;
-      name: string;
-    };
-  }>;
+    name: string;
+  };
+};
+
+export type BookDetail = Book & {
+  Review: Array<ReviewBook>;
 };
 
 export type BookDetailApiResponse = ApiResponse<BookDetail>;

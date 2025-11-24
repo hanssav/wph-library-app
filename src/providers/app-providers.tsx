@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { toast, Toaster } from 'sonner';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 type Props = {
   children: React.ReactNode;
@@ -60,7 +60,7 @@ const AppProvider = ({ children }: Props) => {
         {children}
 
         <Toaster richColors position='top-right' />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </ReduxProvider>
   );

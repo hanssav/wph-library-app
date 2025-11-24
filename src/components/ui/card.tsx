@@ -13,13 +13,14 @@ const CardContext = React.createContext<{
 
 export const useCard = () => React.useContext(CardContext);
 
-export const cardVariants = cva('flex flex-col rounded-xl w-full', {
+export const cardVariants = cva('flex flex-col rounded-xl w-full shadow-card', {
   variants: {
     variant: {
-      default: 'shadow-card bg-white gap-3 p-3',
-      category: 'shadow-card gap-3 p-3 lg:gap-4 lg:p-4',
-      book: 'shadow-card rounded-[12px]',
-      author: 'shadow-card gap-3 p-3 rounded-[12px] flex-row',
+      default: 'bg-white gap-3 p-3',
+      category: 'gap-3 p-3 lg:gap-4 lg:p-4',
+      book: 'rounded-[12px]',
+      author: 'gap-3 p-3 rounded-[12px] flex-row',
+      review: 'p-4 gap-4',
     },
   },
   defaultVariants: {
@@ -101,6 +102,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
         variant === 'book' &&
           'text-sm-bold lg:text-lg-bold wrap-break-words leading-tight line-clamp-2',
         variant === 'author' && 'text-md-bold lg:text-lg-bold lg:line-clamp-1',
+        variant === 'review' && 'text-sm-bold md:text-lg-bold',
         className
       )}
       {...props}
@@ -119,6 +121,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
           'text-sm-medium lg:text-md-semibold text-neutral-700',
         variant === 'author' &&
           'text-sm-medium lg:text-md-medium text-[#0A0D12] line-clamp-1',
+        variant === 'review' && 'text-sm-medium md:text-md-medium',
         className
       )}
       {...props}

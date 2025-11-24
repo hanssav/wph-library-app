@@ -22,7 +22,7 @@ const BooksList = ({
   return (
     <div
       className={cn(
-        'grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 lg:gap-5',
+        'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5',
         className
       )}
       {...props}
@@ -52,7 +52,7 @@ const BookCard = ({ book }: { book: Book }) => {
       </CardImageWrapper>
       <CardContent>
         <CardTitle>{book.title}</CardTitle>
-        <CardDescription>{book.author.name}</CardDescription>
+        <CardDescription>{book.Author?.name}</CardDescription>
         <CardRating>{book.rating}</CardRating>
       </CardContent>
     </Card>
@@ -60,10 +60,10 @@ const BookCard = ({ book }: { book: Book }) => {
 };
 
 type LoadMoreButtonProps = {
-  author: Author[] | null;
-  isFetchingNextPage: boolean;
-  hasNextPage: boolean;
-  fetchNextPage: () => void;
+  author?: Author[] | null;
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
 };
 
 const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
