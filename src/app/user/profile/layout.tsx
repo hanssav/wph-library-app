@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 
 const tabConfig = [
   { value: '', label: 'Profile' },
-  { value: 'reviews', label: 'Reviews' },
   { value: 'borrowed-list', label: 'Borrowed List' },
+  { value: 'reviews', label: 'Reviews' },
 ];
 
 export default function ProfileLayout() {

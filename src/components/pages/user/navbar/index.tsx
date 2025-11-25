@@ -14,9 +14,11 @@ import type { RootState } from '@/store';
 import ButtonUserNotLogin from './button-user-not-login';
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { IMAGES } from '@/lib/constants';
+import { HOME_PATH, IMAGES } from '@/lib/constants';
+import { useNavigate } from 'react-router-dom';
 
 const UserNavbar = () => {
+  const navigate = useNavigate();
   const { token, user } = useSelector((state: RootState) => state.auth);
   const [isOpenMenu, setIsOpenMenu] = React.useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
@@ -25,7 +27,10 @@ const UserNavbar = () => {
   return (
     <header className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
       <div className='container-x flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
-        <div className='relative overflow-hidden size-10 md:w-auto md:size-11'>
+        <div
+          className='relative overflow-hidden size-10 md:w-auto md:size-11'
+          onClick={() => navigate(HOME_PATH)}
+        >
           <img
             src={IMAGES.LOGO}
             alt='Logo'

@@ -40,36 +40,3 @@ export type AuthErrorResponse = {
 
 export type RegisterResponse = RegisterSuccessResponse | AuthErrorResponse;
 export type LoginResponse = LoginSuccessResponse | AuthErrorResponse;
-
-// ======================
-// ME TYPE
-// ======================
-
-export type LoanStats = {
-  borrowed: number;
-  late: number;
-  returned: number;
-  total: number;
-};
-
-export type MeResponseData = {
-  profile: AuthUser;
-  loanStats: LoanStats;
-  reviewsCount: number;
-};
-
-export type MeApiResponse = ApiResponse<MeResponseData>;
-
-export type UpdateProfileResponseData = {
-  profile: AuthUser;
-};
-
-export type UpdateProfileRequest = {
-  name: string;
-};
-
-export type UpdateProfileApiResponse = {
-  success: true;
-  message: 'Profile updated' | string;
-  data: UpdateProfileResponseData;
-};

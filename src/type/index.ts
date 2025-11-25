@@ -4,3 +4,5 @@ export * from './form-field';
 export * from './base-component.type';
 export * from './author.type';
 export * from './api.type';
+export * from './me.type';
+export * from './review.type';

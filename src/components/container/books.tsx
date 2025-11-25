@@ -10,10 +10,10 @@ import {
   CardDescription,
   CardRating,
 } from '../ui/card';
-import { Button } from '../ui/button';
 import { usePrefetchBook } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 import { BOOK_PATH } from '@/lib/constants';
+import { Badge } from '../ui/badge';
 
 const BooksList = ({
   children,
@@ -60,29 +60,33 @@ const BookCard = ({ book }: { book: Book }) => {
   );
 };
 
-type LoadMoreButtonProps = {
-  isFetchingNextPage?: boolean;
-  hasNextPage?: boolean;
-  fetchNextPage?: () => void;
-};
-
-const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
-  isFetchingNextPage,
-  hasNextPage,
-  fetchNextPage,
+const MainBookInfo = ({
+  book,
+  children,
+}: {
+  book: Book;
+  children: React.ReactNode;
 }) => {
   return (
-    <div className='w-full flex-center'>
-      <Button
-        className='w-[14vw] min-w-[150px]'
-        variant='outline'
-        disabled={isFetchingNextPage || !hasNextPage}
-        onClick={fetchNextPage}
-      >
-        {isFetchingNextPage ? 'Loading...' : 'Load More'}
-      </Button>
+    <div className='flex gap-4 '>
+      <div className='w-[92px] relative overflow-hidden h-full'>
+        <img
+          src={getImage(book.coverImage)}
+          alt={book.title}
+          loading='lazy'
+          className='object-cover'
+        />
+      </div>
+      <div className='space-y-1'>
+        <Badge variant={'outline'}>{book?.Category?.name ?? 'Category'}</Badge>
+        <p className='text-md-bold lg:text-xl-bold'> {book.title}</p>
+        <p className='text-sm-medium lg:text-md-medium text-neutral-700'>
+          {book?.Author?.name ?? 'Author name'}
+        </p>
+        {children}
+      </div>
     </div>
   );
 };
 
-export { BooksList, BookCard, LoadMoreButton };
+export { BooksList, BookCard, MainBookInfo };

@@ -1,10 +1,21 @@
 import { meService } from '@/service';
-import type { MeApiResponse } from '@/type';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { GetLoansParams, LoansApiResponse, MeApiResponse } from '@/type';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-const meKeys = {
+export const meKeys = {
   get: ['me'],
+  loans: (params: GetLoansParams) => ['me', 'loans', params],
+  review: (params?: { page: number; limit: number }) => [
+    'me',
+    'reviews',
+    params,
+  ],
 };
 
 export const useMe = () =>
@@ -57,3 +68,25 @@ export const useUpdateMe = () => {
     },
   });
 };
+
+export const useLoans = (params: GetLoansParams) =>
+  useInfiniteQuery<LoansApiResponse>({
+    queryKey: meKeys.loans(params),
+    queryFn: async ({ pageParam = 1 }) => {
+      const finalParams = {
+        ...params,
+        page: Number(pageParam),
+      };
+      const res = await meService.loans(finalParams);
+      return res;
+    },
+    getNextPageParam: (lastPage) => {
+      const { page, totalPages } = lastPage.data.pagination;
+      return page < totalPages ? page + 1 : undefined;
+    },
+    getPreviousPageParam: (lastPage) => {
+      const { page } = lastPage.data.pagination;
+      return page > 1 ? page - 1 : undefined;
+    },
+    initialPageParam: 1,
+  });

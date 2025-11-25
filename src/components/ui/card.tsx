@@ -20,7 +20,7 @@ export const cardVariants = cva('flex flex-col rounded-xl w-full shadow-card', {
       category: 'gap-3 p-3 lg:gap-4 lg:p-4',
       book: 'rounded-[12px] cursor-pointer',
       author: 'gap-3 p-3 rounded-[12px] flex-row cursor-pointer',
-      review: 'p-4 gap-4',
+      review: 'p-3 lg:gap-5 gap-4',
       base: 'bg-white border border-neutral-300 rounded-[12px] py-4 space-y-4 shadow-none!',
     },
   },

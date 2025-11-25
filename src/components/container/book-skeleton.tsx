@@ -29,4 +29,16 @@ const BookCardSkeleton: React.FC<{ className?: string }> = ({ className }) => {
   );
 };
 
+export const MainBookSkeletonInfo = () => (
+  <div className='flex gap-4'>
+    <Skeleton className='w-[92px] h-[138px] rounded-lg' />
+
+    <div className='space-y-3 flex-1'>
+      <Skeleton className='h-6 w-24 rounded-full' />
+      <Skeleton className='h-7 w-48 lg:h-8 lg:w-64' />
+      <Skeleton className='h-5 w-32 lg:h-6 lg:w-40' />
+    </div>
+  </div>
+);
+
 export default BookCardSkeleton;
