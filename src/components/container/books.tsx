@@ -65,7 +65,7 @@ const MainBookInfo = ({
   children,
 }: {
   book: Book;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }) => {
   return (
     <div className='flex gap-4 '>

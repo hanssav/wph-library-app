@@ -1,6 +1,7 @@
 import type { ApiResponse, Pagination } from './api.type';
 import type { AuthUser } from './auth.type';
 import type { Book } from './book.type';
+import type { Review } from './review.type';
 
 export type LoanStats = {
   borrowed: number;
@@ -58,5 +59,14 @@ export type GetLoansParams = {
   limit?: number;
 };
 
-// Final typed response
 export type LoansApiResponse = ApiResponse<LoansData>;
+
+export type ReviewsResponseData = {
+  reviews: Review[];
+  pagination: Pagination;
+};
+
+export type GetReviewParams = Pick<Pagination, 'page' | 'limit'>;
+
+// 5. Full API Response
+export type ReviewsApiResponse = ApiResponse<ReviewsResponseData>;

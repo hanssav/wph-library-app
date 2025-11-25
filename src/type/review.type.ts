@@ -1,3 +1,6 @@
+import type { ApiResponse } from './api.type';
+import type { Book } from './book.type';
+
 // ========== REQUEST ==========
 export type CreateReviewRequest = {
   bookId: number;
@@ -6,6 +9,13 @@ export type CreateReviewRequest = {
 };
 
 // ========== RESPONSE ==========
+
+// type ReviewBook = {
+//   id: number;
+//   title: string;
+//   coverImage: string;
+// };
+
 export type Review = {
   id: number;
   star: number;
@@ -13,6 +23,7 @@ export type Review = {
   userId: number;
   bookId: number;
   createdAt: string;
+  Book: Book;
 };
 
 export type BookStats = {
@@ -25,8 +36,4 @@ export type CreateReviewResponseData = {
   bookStats: BookStats;
 };
 
-export type CreateReviewResponse = {
-  success: boolean;
-  message: string;
-  data: CreateReviewResponseData;
-};
+export type CreateReviewResponse = ApiResponse<CreateReviewRequest>;

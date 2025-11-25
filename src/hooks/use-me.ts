@@ -1,5 +1,10 @@
 import { meService } from '@/service';
-import type { GetLoansParams, LoansApiResponse, MeApiResponse } from '@/type';
+import type {
+  GetLoansParams,
+  GetReviewParams,
+  LoansApiResponse,
+  MeApiResponse,
+} from '@/type';
 import {
   useInfiniteQuery,
   useMutation,
@@ -11,11 +16,7 @@ import { toast } from 'sonner';
 export const meKeys = {
   get: ['me'],
   loans: (params: GetLoansParams) => ['me', 'loans', params],
-  review: (params?: { page: number; limit: number }) => [
-    'me',
-    'reviews',
-    params,
-  ],
+  review: (params?: GetReviewParams) => ['me', 'reviews', params],
 };
 
 export const useMe = () =>
@@ -89,4 +90,10 @@ export const useLoans = (params: GetLoansParams) =>
       return page > 1 ? page - 1 : undefined;
     },
     initialPageParam: 1,
+  });
+
+export const useReviews = (params?: GetReviewParams) =>
+  useQuery({
+    queryKey: meKeys.review(params),
+    queryFn: () => meService.reviews(params).then((res) => res.data),
   });
