@@ -35,7 +35,7 @@ export const AUTHOR_PATH = {
 };
 
 export const PROFILE_PATH = '/profile';
-export const REVIEW_PATH = '/review';
+export const REVIEW_PATH = '/reviews';
 export const BORROWED_LIST_PATH = '/borrowed-list';
 export const CART_PATH = '/cart';
 export const CHECKOUT_PATH = '/checkout';
