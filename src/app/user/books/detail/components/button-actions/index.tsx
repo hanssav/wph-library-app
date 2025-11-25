@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
+import { useAddToCart } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 const ButtonActions = ({
   className,
@@ -9,6 +11,17 @@ const ButtonActions = ({
   className?: string;
   isMobile?: boolean;
 }) => {
+  const addCart = useAddToCart();
+  const { id } = useParams();
+  const bookId = Number(id);
+
+  const handleAddToCart = () => {
+    addCart.mutate({
+      bookId,
+      qty: 1,
+    });
+  };
+
   return (
     <div
       className={cn(
@@ -22,8 +35,10 @@ const ButtonActions = ({
       <Button
         variant={'outline'}
         className='flex-1 md:min-w-[130px] lg:min-w-[200px]'
+        onClick={handleAddToCart}
+        disabled={addCart.isPending}
       >
-        Add To Cart
+        {addCart.isPending ? 'Adding...' : 'Add To Cart'}
       </Button>
       <Button className='md:min-w-[130px] lg:min-w-[200px] flex-1'>
         Borrow Book

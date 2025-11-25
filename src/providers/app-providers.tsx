@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/api';
 import { store } from '@/store';
 import { setCredentials } from '@/store/slices';
 import {
@@ -17,14 +18,10 @@ type Props = {
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    onError: (error) => toast.error(getErrorMessage(error)),
   }),
   mutationCache: new MutationCache({
-    onError: (error) => {
-      toast.error(error.message);
-    },
+    onError: (error) => toast.error(getErrorMessage(error)),
   }),
   defaultOptions: {
     queries: {

@@ -31,12 +31,12 @@ export const useUpdateMe = () => {
     //DEV NOTE::
     // OPTIMISTIC UPDATE — UI langsung berubah sebelum server respon
     onMutate: async (newName) => {
-      await queryClient.cancelQueries({ queryKey: ['me'] });
+      await queryClient.cancelQueries({ queryKey: meKeys.get });
 
-      const previousData = queryClient.getQueryData<MeApiResponse>(['me']);
+      const previousData = queryClient.getQueryData<MeApiResponse>(meKeys.get);
 
       // Update cache dulu → UI langsung berubah!
-      queryClient.setQueryData<MeApiResponse>(['me'], (old) => {
+      queryClient.setQueryData<MeApiResponse>(meKeys.get, (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -65,7 +65,7 @@ export const useUpdateMe = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({ queryKey: meKeys.get });
     },
   });
 };

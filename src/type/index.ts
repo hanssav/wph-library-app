@@ -6,3 +6,4 @@ export * from './author.type';
 export * from './api.type';
 export * from './me.type';
 export * from './review.type';
+export * from './cart.type';

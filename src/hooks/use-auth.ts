@@ -1,3 +1,4 @@
+import { getErrorMessage } from '@/api';
 import type { LoginRequest, RegisterRequest } from '@/schema';
 import { authService } from '@/service/auth.service';
 import { useAppDispatch } from '@/store';
@@ -49,20 +50,14 @@ export const useLogout = () => {
 
   return async () => {
     try {
-      // Clear Redux
       dispatch(clearAuth());
-
-      // Clear localStorage
       localStorage.clear();
-
-      // Reset React Query
-      await queryClient.cancelQueries(); // Cancel ongoing queries
+      await queryClient.cancelQueries();
       queryClient.clear();
 
-      // Navigate
       navigate('/auth/login', { replace: true });
     } catch (error) {
-      console.error('Logout error:', error);
+      toast.error(getErrorMessage(error));
     }
   };
 };
