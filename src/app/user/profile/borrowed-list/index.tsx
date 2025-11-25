@@ -3,7 +3,8 @@ import {
   QueryStateComp,
   SectionWrapper,
 } from '@/components/container';
-import SearchInput, {
+import {
+  SearchInput,
   SearchInputWrapper,
 } from '@/components/container/search-input';
 import {

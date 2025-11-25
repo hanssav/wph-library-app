@@ -35,6 +35,4 @@ const SearchInput = ({ className, ...props }: SearchInputProps) => {
   );
 };
 
-export default SearchInput;
-
-export { SearchInputWrapper };
+export { SearchInputWrapper, SearchInput };
