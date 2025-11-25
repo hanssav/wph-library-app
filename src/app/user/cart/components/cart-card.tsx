@@ -17,22 +17,31 @@ const CartCard = ({ children, className, ...props }: CartCardProps) => {
 
 type CartCardItemsProps = {
   cart: CartItemList;
-  isSelected: boolean; // ← boolean pasti!
-  onToggle: () => void;
+  isSelected?: boolean;
+  onToggle?: () => void;
+  useCheckbook?: boolean;
 };
 
-const CartCardItems = ({ cart, onToggle, isSelected }: CartCardItemsProps) => (
+const CartCardItems = ({
+  cart,
+  onToggle,
+  isSelected,
+  useCheckbook = false,
+}: CartCardItemsProps) => (
   <Card
     className={cn(
       'flex-row shadow-none! ',
-      'border-b border-neutral-300 rounded-none last:border-none last:pb-0'
+      'border-b border-neutral-300 rounded-none last:border-none last:pb-0',
+      !useCheckbook && 'p-0'
     )}
   >
-    <Checkbox
-      className='size-5'
-      onCheckedChange={onToggle}
-      checked={isSelected}
-    />
+    {useCheckbook && (
+      <Checkbox
+        className='size-5'
+        onCheckedChange={onToggle}
+        checked={isSelected}
+      />
+    )}
     <MainBookInfo book={cart.book} />
   </Card>
 );

@@ -44,6 +44,7 @@ const Cart = () => {
                 key={cart.id}
                 isSelected={selected.includes(cart.id)}
                 onToggle={() => toggleItem(cart.id)}
+                useCheckbook
               />
             ))}
           </CartCard>
