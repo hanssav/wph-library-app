@@ -1,6 +1,6 @@
 import { cn, getImage } from '@/lib/utils';
 import type { BaseComponentProps, Book } from '@/type';
-import { type ComponentProps } from 'react';
+import { type ComponentProps, type ReactNode } from 'react';
 import {
   Card,
   CardImageWrapper,
@@ -60,28 +60,40 @@ const BookCard = ({ book }: { book: Book }) => {
   );
 };
 
-const MainBookInfo = ({
+type BookLike = {
+  title: string;
+  coverImage: string | null;
+  price?: number;
+  isbn?: string;
+  Category?: { name: string } | null;
+  Author?: { name: string } | null;
+};
+
+type MainBookInfoProps<T extends BookLike> = {
+  book: T;
+  children?: ReactNode;
+};
+
+const MainBookInfo = <T extends BookLike>({
   book,
   children,
-}: {
-  book: Book;
-  children?: React.ReactNode;
-}) => {
+}: MainBookInfoProps<T>) => {
   return (
-    <div className='flex gap-4 '>
-      <div className='w-[92px] relative overflow-hidden h-full'>
+    <div className='flex gap-4'>
+      <div className='w-[92px] h-[130px] shrink-0'>
         <img
           src={getImage(book.coverImage)}
           alt={book.title}
           loading='lazy'
-          className='object-cover'
+          className='w-full h-full object-cover rounded-md'
         />
       </div>
-      <div className='space-y-1'>
-        <Badge variant={'outline'}>{book?.Category?.name ?? 'Category'}</Badge>
-        <p className='text-md-bold lg:text-xl-bold'> {book.title}</p>
-        <p className='text-sm-medium lg:text-md-medium text-neutral-700'>
-          {book?.Author?.name ?? 'Author name'}
+
+      <div className='space-y-1 flex-1'>
+        <Badge variant='outline'>{book.Category?.name ?? 'Category'}</Badge>
+        <h3 className='font-bold text-lg line-clamp-2'>{book.title}</h3>
+        <p className='text-sm text-neutral-700'>
+          {book.Author?.name ?? 'Unknown Author'}
         </p>
         {children}
       </div>

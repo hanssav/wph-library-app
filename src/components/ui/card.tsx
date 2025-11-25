@@ -16,7 +16,7 @@ export const useCard = () => React.useContext(CardContext);
 export const cardVariants = cva('flex flex-col rounded-xl w-full shadow-card', {
   variants: {
     variant: {
-      default: 'bg-white gap-3 p-3',
+      default: 'bg-white gap-4 p-4',
       category: 'gap-3 p-3 lg:gap-4 lg:p-4',
       book: 'rounded-[12px] cursor-pointer',
       author: 'gap-3 p-3 rounded-[12px] flex-row cursor-pointer',
