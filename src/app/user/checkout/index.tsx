@@ -27,7 +27,7 @@ const ContentWrapper = ({
 );
 
 const Checkout = () => {
-  const [borowDate, setBorowDate] = React.useState<string>('22 Augst 2025');
+  const [borowDate] = React.useState<string>('22 Augst 2025');
   const { data } = useMe();
   const { data: cartData } = useCart();
   const carts = cartData?.items ?? [];
