@@ -42,4 +42,8 @@ export const CHECKOUT_PATH = '/checkout';
 
 export const HOME_PATH = '/';
 
-export const DASHBOARD_PATH = '/dashboard';
+export const DASHBOARD_PATH = {
+  USER: '/dashboard/users',
+  BOOK_LIST: '/dashboard/book-list',
+  BORROWED_LIST: '/dashboard/borrowed-list',
+};

@@ -12,7 +12,7 @@ import {
 } from '@/components/pages/auth';
 import { loginSection, loginFields } from '../auth.constants';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getDefaultRouteForRole } from '@/components/pages/auth/protected-route';
+import { getDefaultRouteForRole } from '@/routes/protected-route';
 
 const Login = () => {
   const login = useLogin();

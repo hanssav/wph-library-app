@@ -1,8 +1,8 @@
 import AuthLayout from '@/app/auth/layout';
 import Login from '@/app/auth/login';
 import Register from '@/app/auth/register';
-import AdminBookList from '@/app/dashboard/admin-book-list';
-import AdminBorrowedList from '@/app/dashboard/admin-borrowed-list';
+import AdminBookList from '@/app/dashboard/admin-book';
+import AdminBorrowedList from '@/app/dashboard/admin-borrowed';
 import AdminUsers from '@/app/dashboard/admin-users';
 import LayoutDashboardTabMenu from '@/app/dashboard/layout';
 import Layout from '@/app/layout';
@@ -17,7 +17,7 @@ import BorrowedList from '@/app/user/profile/borrowed-list';
 import ProfileLayout from '@/app/user/profile/layout';
 import Reviews from '@/app/user/profile/reviews';
 import NotFoundPage from '@/components/container/not-found';
-import ProtectedRoute from '@/components/pages/auth/protected-route';
+import ProtectedRoute from '@/routes/protected-route';
 import { Routes, Route } from 'react-router-dom';
 
 export default function AppRoutes() {

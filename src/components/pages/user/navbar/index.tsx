@@ -8,7 +8,7 @@ import {
 import { Search } from 'lucide-react';
 import { userMenu } from './navbar.constants';
 import { cn } from '@/lib/utils';
-import { HOME_PATH, PROFILE_PATH } from '@/lib/constants';
+import { DASHBOARD_PATH, HOME_PATH, PROFILE_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
 import { useLogout, useUser } from '@/hooks';
 import { Logo } from './components/nav-logo';
@@ -28,15 +28,13 @@ const UserNavbar = () => {
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
 
   const isLoggedIn = Boolean(token);
-
   const logout = useLogout();
 
-  console.log(isAdmin, 'isAdmii');
-
+  const logoPath = isAdmin ? DASHBOARD_PATH.USER : HOME_PATH;
   return (
     <header className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
       <div className='container-x flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
-        <Logo onClick={() => navigate(HOME_PATH)} />
+        <Logo onClick={() => navigate(logoPath)} />
         {/* Search */}
         <SearchBar
           isLoggedIn={isLoggedIn}
