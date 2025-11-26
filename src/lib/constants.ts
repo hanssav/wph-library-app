@@ -41,3 +41,5 @@ export const CART_PATH = '/cart';
 export const CHECKOUT_PATH = '/checkout';
 
 export const HOME_PATH = '/';
+
+export const DASHBOARD_PATH = '/dashboard';

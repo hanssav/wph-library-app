@@ -14,6 +14,10 @@ import Profile from './user/profile';
 import Reviews from './user/profile/reviews';
 import BorrowedList from './user/profile/borrowed-list';
 import ProfileLayout from './user/profile/layout';
+import ProtectedRoute from '@/components/pages/auth/protected-route';
+import NotFoundPage from '@/components/container/not-found';
+import DashboardLayout from './dashboard/layout';
+import AdminUsers from './dashboard';
 
 function App() {
   return (
@@ -21,43 +25,58 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<UserLayout />}>
-            <Route index element={<Home />}></Route>
-
+            <Route index element={<Home />} />
             <Route path='books'>
               <Route index element={<BooksList />} />
               <Route path=':id' element={<BooksDetail />} />
             </Route>
-
             <Route path='author'>
               <Route path=':id' element={<Author />} />
             </Route>
+          </Route>
+
+          <Route
+            path='/auth'
+            element={
+              <ProtectedRoute requireAuth={false}>
+                <AuthLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+          </Route>
+
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute allowedRoles={['USER', 'ADMIN']}>
+                <UserLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route path='profile' element={<ProfileLayout />}>
               <Route index element={<Profile />} />
               <Route path='reviews' element={<Reviews />} />
               <Route path='borrowed-list' element={<BorrowedList />} />
             </Route>
-
             <Route path='cart' element={<Cart />} />
-            {/* chceckout and checkout success */}
             <Route path='checkout' element={<Checkout />} />
           </Route>
 
-          <Route path='/auth' element={<AuthLayout />}>
-            <Route path='login' element={<Login />} />
-            <Route path='register' element={<Register />} />
+          <Route
+            path='/dashboard'
+            element={
+              <ProtectedRoute allowedRoles={['ADMIN']}>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path='users' element={<AdminUsers />} />
           </Route>
 
-          {/* Private Dashboard */}
-          {/* <Route
-          path="/dashboard/*"
-          element={
-            <PrivateRoute>
-              <DashboardLayout />
-            </PrivateRoute>
-          }
-        > */}
-          {/* <Route index element={<Overview />} />
-            <Route path='profile' element={<Profile />} /> */}
+          {/* 404 - Not Found */}
+          <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </Router>
     </AppProvider>
