@@ -1,6 +1,7 @@
-import { useAppSelector } from '@/store';
 import { Navigate, useLocation } from 'react-router-dom';
 import type { UserRole } from '@/type';
+import { useUser } from '@/hooks';
+import React from 'react';
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -14,7 +15,9 @@ const ProtectedRoute = ({
   requireAuth = true,
 }: ProtectedRouteProps) => {
   const location = useLocation();
-  const { user, token } = useAppSelector((state) => state.auth);
+  const { user, token } = useUser();
+
+  if (!user) return null;
 
   const isAuthenticated = !!token && !!user;
   const userRole = user?.role;
@@ -38,14 +41,13 @@ const ProtectedRoute = ({
       return <Navigate to={defaultRoute} replace />;
     }
   }
-
   return <>{children}</>;
 };
-// Helper function to get default route based on user role
+
 export const getDefaultRouteForRole = (role?: UserRole): string => {
   switch (role) {
     case 'ADMIN':
-      return '/dashboard';
+      return '/dashboard/users';
     case 'USER':
       return '/';
     default:

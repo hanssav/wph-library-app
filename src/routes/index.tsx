@@ -1,7 +1,10 @@
 import AuthLayout from '@/app/auth/layout';
 import Login from '@/app/auth/login';
 import Register from '@/app/auth/register';
-import AdminUsers from '@/app/dashboard';
+import AdminBookList from '@/app/dashboard/admin-book-list';
+import AdminBorrowedList from '@/app/dashboard/admin-borrowed-list';
+import AdminUsers from '@/app/dashboard/admin-users';
+import LayoutDashboardTabMenu from '@/app/dashboard/layout';
 import Layout from '@/app/layout';
 import Author from '@/app/user/author/id';
 import BooksDetail from '@/app/user/books/detail';
@@ -65,7 +68,18 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        <Route path='users' element={<AdminUsers />} />
+        <Route element={<LayoutDashboardTabMenu />}>
+          <Route path='users' element={<AdminUsers />} />
+          <Route path='borrowed-list' element={<AdminBorrowedList />} />
+          <Route path='book-list' element={<AdminBookList />} />
+          {/* <Route index element={<DashboardOverview />} /> */}
+          {/* <Route path='books' element={<AdminBooks />} /> */}
+        </Route>
+
+        {/* 2. Halaman yang TIDAK PAKAI Tab Menu */}
+        {/* <Route path='settings' element={<AdminSettings />} />
+        <Route path='profile' element={<AdminProfile />} />
+        <Route path='notifications' element={<AdminNotifications />} /> */}
       </Route>
 
       <Route path='*' element={<NotFoundPage />} />

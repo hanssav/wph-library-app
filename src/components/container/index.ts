@@ -5,6 +5,7 @@ import { BooksList, BookCard } from './books';
 import { AuthorCard, AuthorsList } from './author';
 import StarrRating from './star-rating';
 import { BookInfiniteList } from './book-infinite-list';
+import { TabMenu } from './tab-menu';
 
 import AuthorCardSkeleton from './author-skeletron';
 import BookCardSkeleton from './book-skeleton';
@@ -25,4 +26,5 @@ export {
   AuthorsList,
   StarrRating,
   BookInfiniteList,
+  TabMenu,
 };
