@@ -2,6 +2,8 @@ import AuthLayout from '@/app/auth/layout';
 import Login from '@/app/auth/login';
 import Register from '@/app/auth/register';
 import AdminBookList from '@/app/dashboard/admin-book';
+import AdminBookForm from '@/app/dashboard/admin-book/form';
+import AdminBookDetail from '@/app/dashboard/admin-book/id';
 import AdminBorrowedList from '@/app/dashboard/admin-borrowed';
 import AdminUsers from '@/app/dashboard/admin-users';
 import LayoutDashboardTabMenu from '@/app/dashboard/layout';
@@ -60,26 +62,31 @@ export default function AppRoutes() {
         <Route path='checkout' element={<Checkout />} />
       </Route>
 
-      <Route
-        path='/dashboard'
-        element={
-          <ProtectedRoute allowedRoles={['ADMIN']}>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
-        <Route element={<LayoutDashboardTabMenu />}>
-          <Route path='users' element={<AdminUsers />} />
-          <Route path='borrowed-list' element={<AdminBorrowedList />} />
-          <Route path='book-list' element={<AdminBookList />} />
-          {/* <Route index element={<DashboardOverview />} /> */}
-          {/* <Route path='books' element={<AdminBooks />} /> */}
-        </Route>
+      <Route path='/dashboard'>
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route element={<LayoutDashboardTabMenu />}>
+            <Route index element={<AdminUsers />} />
+            <Route path='users' element={<AdminUsers />} />
+            <Route path='borrowed-list' element={<AdminBorrowedList />} />
+            <Route path='book-list' element={<AdminBookList />} />{' '}
+          </Route>
 
-        {/* 2. Halaman yang TIDAK PAKAI Tab Menu */}
-        {/* <Route path='settings' element={<AdminSettings />} />
-        <Route path='profile' element={<AdminProfile />} />
-        <Route path='notifications' element={<AdminNotifications />} /> */}
+          <Route path='book-list/:id' element={<AdminBookDetail />} />
+          <Route
+            path='book-list/new'
+            element={<AdminBookForm mode='create' />}
+          />
+          <Route
+            path='book-list/:id/edit'
+            element={<AdminBookForm mode='edit' />}
+          />
+        </Route>
       </Route>
 
       <Route path='*' element={<NotFoundPage />} />
