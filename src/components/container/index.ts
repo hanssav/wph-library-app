@@ -6,6 +6,7 @@ import { AuthorCard, AuthorsList } from './author';
 import StarrRating from './star-rating';
 import { BookInfiniteList } from './book-infinite-list';
 import { TabMenu } from './tab-menu';
+import { EmptyState } from './empty-state';
 
 import AuthorCardSkeleton from './author-skeletron';
 import BookCardSkeleton from './book-skeleton';
@@ -27,4 +28,5 @@ export {
   StarrRating,
   BookInfiniteList,
   TabMenu,
+  EmptyState,
 };

@@ -12,7 +12,7 @@ export const BOOK_STATUS_TABS: BookStatus[] = [
   { id: 'damaged', value: 'DAMAGED', label: 'Damaged' },
 ];
 
-import { DASHBOARD_PATH } from '@/lib/constants';
+import { DASHBOARD_PATH } from '@/constants/base.constants';
 import type { NavigateFunction } from 'react-router-dom';
 
 export type BookAction = {

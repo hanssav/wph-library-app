@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
-import { CHECKOUT_PATH } from '@/lib/constants';
+import { CHECKOUT_PATH } from '@/constants/base.constants';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 

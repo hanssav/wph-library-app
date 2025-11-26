@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { AUTH_PATH } from '@/lib/constants';
+import { AUTH_PATH } from '@/constants/base.constants';
 import { useNavigate } from 'react-router-dom';
 
 export const UserNotLoginButton = () => {

@@ -5,10 +5,11 @@ import {
 } from '@/components/container/search-input';
 import { ReviewBookCard, ReviewBookItem } from './components/review-book-card';
 import { useReviews } from '@/hooks';
-import { EmptyReviews } from './components/review-book-empty';
 import { ReviewBookSkeleton } from './components/review-book-skeleton';
 import type { GetReviewParams } from '@/type';
 import React from 'react';
+import { EmptyState } from '@/components/container/empty-state';
+import { EMPTY_REVIEWS_DATA } from '@/constants';
 
 const Reviews = () => {
   const [params] = React.useState<GetReviewParams>({ page: 1, limit: 10 });
@@ -25,7 +26,7 @@ const Reviews = () => {
           skeletonCount={params.limit ?? 10}
           Skeleton={ReviewBookSkeleton}
           data={data?.reviews ?? []}
-          fallback={<EmptyReviews />}
+          fallback={<EmptyState data={EMPTY_REVIEWS_DATA} />}
         >
           {(review) => <ReviewBookItem key={review.id} review={review} />}
         </QueryStateComp>

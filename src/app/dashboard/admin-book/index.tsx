@@ -2,27 +2,43 @@ import {
   FilterBadge,
   FilterBadgeItem,
 } from '@/app/user/profile/borrowed-list/components';
-import { SectionWrapper } from '@/components/container';
+import {
+  EmptyState,
+  LoadMoreButton,
+  QueryStateComp,
+  SectionWrapper,
+} from '@/components/container';
 import {
   SearchInputWrapper,
   SearchInput,
 } from '@/components/container/search-input';
-import { useBooksInfinite } from '@/hooks';
-import { BOOK_STATUS_TABS } from './book.constants';
+import { useBooksInfinite, useDebounce } from '@/hooks';
+import { BOOK_STATUS_TABS } from './components/book.constants';
 import React from 'react';
-import { AdminBookCard, AdminBookCardItem } from './components';
+import {
+  AdminBookCard,
+  AdminBookCardItem,
+  AdminBookCardItemSkeleton,
+} from './components';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { DASHBOARD_PATH } from '@/lib/constants';
+import { DASHBOARD_PATH } from '@/constants/base.constants';
+import type { BookSearchParams } from '@/type';
+import { EMPTY_BOOKS_DATA } from '@/constants';
 
 const AdminBookList = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = React.useState<string>('all');
-  const { data } = useBooksInfinite();
+  const [params, setParams] = React.useState<BookSearchParams>({
+    q: '',
+    limit: 10,
+  });
 
+  const debounceParams = useDebounce(params);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useBooksInfinite(debounceParams);
   const books = data?.pages.flatMap((page) => page.data.books) ?? [];
 
-  console.log(books, 'books');
   return (
     <SectionWrapper title='Book List' className='w-full'>
       <Button
@@ -32,7 +48,13 @@ const AdminBookList = () => {
         Add Book
       </Button>
       <SearchInputWrapper className='w-profile'>
-        <SearchInput placeholder='Search book' name='search-book' />
+        <SearchInput
+          placeholder='Search book'
+          name='search-book'
+          onChange={(e) =>
+            setParams((prev) => ({ ...prev, q: e.target.value }))
+          }
+        />
       </SearchInputWrapper>
 
       <FilterBadge className='overflow-x-auto py-2'>
@@ -48,10 +70,23 @@ const AdminBookList = () => {
         ))}
       </FilterBadge>
       <AdminBookCard>
-        {books.map((book) => (
-          <AdminBookCardItem book={book} key={book.id} />
-        ))}
+        <QueryStateComp
+          isLoading={isLoading}
+          skeletonCount={params.limit}
+          data={books}
+          Skeleton={AdminBookCardItemSkeleton}
+          fallback={<EmptyState data={EMPTY_BOOKS_DATA} />}
+        >
+          {(book) => <AdminBookCardItem book={book} key={book.id} />}
+        </QueryStateComp>
       </AdminBookCard>
+      {books.length > 0 && (
+        <LoadMoreButton
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
     </SectionWrapper>
   );
 };

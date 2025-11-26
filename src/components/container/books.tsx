@@ -12,7 +12,7 @@ import {
 } from '../ui/card';
 import { usePrefetchBook } from '@/hooks';
 import { useNavigate } from 'react-router-dom';
-import { BOOK_PATH } from '@/lib/constants';
+import { BOOK_PATH } from '@/constants/base.constants';
 import { Badge } from '../ui/badge';
 
 const BooksList = ({

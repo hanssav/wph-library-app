@@ -1,6 +1,6 @@
 import type { FormFieldType } from '@/type';
 import type { AuthSectionProps } from './type';
-import { AUTH_PATH } from '@/lib/constants';
+import { AUTH_PATH } from '@/constants/base.constants';
 
 export const loginFields: FormFieldType[] = [
   {

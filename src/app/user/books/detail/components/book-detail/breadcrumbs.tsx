@@ -6,7 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { BOOK_PATH, HOME_PATH } from '@/lib/constants';
+import { BOOK_PATH, HOME_PATH } from '@/constants/base.constants';
 import { ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 

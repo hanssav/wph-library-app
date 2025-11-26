@@ -12,7 +12,7 @@ import {
 } from '@/components/pages/auth';
 import { registerSection, registerFields } from '../auth.constants';
 import { useNavigate } from 'react-router-dom';
-import { AUTH_PATH } from '@/lib/constants';
+import { AUTH_PATH } from '@/constants/base.constants';
 
 const Register = () => {
   const register = useRegister();

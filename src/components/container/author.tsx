@@ -6,7 +6,7 @@ import { Avatar, AvatarImage } from '../ui/avatar';
 import { Album } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { usePrefetchAuthor } from '@/hooks/use-author';
-import { AUTHOR_PATH } from '@/lib/constants';
+import { AUTHOR_PATH } from '@/constants/base.constants';
 
 type AuthorsListProps = BaseComponentProps & ComponentProps<'div'>;
 

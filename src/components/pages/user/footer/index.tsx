@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { IMAGES } from '@/lib/constants';
+import { IMAGES } from '@/constants/base.constants';
 import { Dribbble, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 const footerSection = {

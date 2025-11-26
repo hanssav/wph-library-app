@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartCount } from '@/hooks';
-import { CART_PATH } from '@/lib/constants';
+import { CART_PATH } from '@/constants/base.constants';
 import { cn } from '@/lib/utils';
 import { Handbag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

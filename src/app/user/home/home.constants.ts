@@ -1,4 +1,4 @@
-import { IMAGES } from '@/lib/constants';
+import { IMAGES } from '@/constants/base.constants';
 
 export type HeroSlidesType = { id: number; src: string; alt: string };
 

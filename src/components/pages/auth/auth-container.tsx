@@ -3,7 +3,7 @@ import type { BaseComponentProps } from '@/type';
 import type { AuthSectionProps } from '../../../app/auth/type';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { IMAGES } from '@/lib/constants';
+import { IMAGES } from '@/constants/base.constants';
 
 type AuthContainerProps = Omit<AuthSectionProps, 'footer'> & BaseComponentProps;
 

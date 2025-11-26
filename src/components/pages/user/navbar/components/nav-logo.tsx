@@ -1,4 +1,4 @@
-import { IMAGES } from '@/lib/constants';
+import { IMAGES } from '@/constants/base.constants';
 
 interface LogoProps {
   onClick: () => void;

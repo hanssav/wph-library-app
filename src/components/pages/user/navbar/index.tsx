@@ -8,7 +8,11 @@ import {
 import { Search } from 'lucide-react';
 import { userMenu } from './navbar.constants';
 import { cn } from '@/lib/utils';
-import { DASHBOARD_PATH, HOME_PATH, PROFILE_PATH } from '@/lib/constants';
+import {
+  DASHBOARD_PATH,
+  HOME_PATH,
+  PROFILE_PATH,
+} from '@/constants/base.constants';
 import { useNavigate } from 'react-router-dom';
 import { useLogout, useUser } from '@/hooks';
 import { Logo } from './components/nav-logo';

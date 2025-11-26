@@ -3,7 +3,7 @@ import {
   HOME_PATH,
   PROFILE_PATH,
   REVIEW_PATH,
-} from '@/lib/constants';
+} from '@/constants/base.constants';
 
 type MenuItem = {
   id: string;

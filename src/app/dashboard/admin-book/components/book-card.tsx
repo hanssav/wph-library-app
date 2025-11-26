@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { BaseComponentProps, Book } from '@/type';
 import type { ComponentProps } from 'react';
-import { BOOK_ACTIONS } from '../book.constants';
+import { BOOK_ACTIONS } from './book.constants';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
