@@ -11,7 +11,6 @@ export const cartKeys = {
 export const useCart = () => {
   const token = useSelector((state: RootState) => state.auth.token);
 
-  console.log(token, 'token');
   return useQuery<CartData>({
     queryKey: cartKeys.getAll,
     queryFn: async () => {

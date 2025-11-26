@@ -8,11 +8,9 @@ import {
 import { Search } from 'lucide-react';
 import { userMenu } from './navbar.constants';
 import { cn } from '@/lib/utils';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/store';
 import { HOME_PATH, PROFILE_PATH } from '@/lib/constants';
 import { useNavigate } from 'react-router-dom';
-import { useLogout } from '@/hooks';
+import { useLogout, useUser } from '@/hooks';
 import { Logo } from './components/nav-logo';
 import { SearchBar } from './components/nav-search-bar';
 import { CloseSearchButton } from './components/nav-close-search';
@@ -24,7 +22,8 @@ import { UserNotLoginButton } from './components/nav-user-not-login-button';
 
 const UserNavbar = () => {
   const navigate = useNavigate();
-  const { token, user } = useSelector((state: RootState) => state.auth);
+  const { token, user, isAdmin } = useUser();
+
   const [isOpenMenu, setIsOpenMenu] = React.useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
 
@@ -32,12 +31,18 @@ const UserNavbar = () => {
 
   const logout = useLogout();
 
+  console.log(isAdmin, 'isAdmii');
+
   return (
     <header className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
       <div className='container-x flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
         <Logo onClick={() => navigate(HOME_PATH)} />
         {/* Search */}
-        <SearchBar isLoggedIn={isLoggedIn} isSearchOpen={isSearchOpen} />
+        <SearchBar
+          isLoggedIn={isLoggedIn}
+          isSearchOpen={isSearchOpen}
+          className={cn(isAdmin && 'hidden!')}
+        />
         <CloseSearchButton
           isSearchOpen={isSearchOpen}
           onClick={() => setIsSearchOpen(false)}
@@ -48,10 +53,13 @@ const UserNavbar = () => {
           className={cn('flex-center gap-4 md:gap-6', isSearchOpen && 'hidden')}
         >
           <Search
-            className='md:hidden size-6'
+            className={cn('md:hidden size-6', isAdmin && 'hidden')}
             onClick={() => setIsSearchOpen(true)}
           />
-          <ShoppingCart isLoggedIn={isLoggedIn} />
+          <ShoppingCart
+            isLoggedIn={isLoggedIn}
+            className={cn(isAdmin && 'hidden')}
+          />
           <DesktopLoginButtons isLoggedIn={isLoggedIn} />
           <DropdownMenu open={isOpenMenu} onOpenChange={setIsOpenMenu}>
             <DropdownMenuTrigger className={cn(!isLoggedIn && 'md:hidden')}>

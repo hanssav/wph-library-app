@@ -5,17 +5,20 @@ import { Search } from 'lucide-react';
 interface SearchBarProps {
   isLoggedIn: boolean;
   isSearchOpen: boolean;
+  className?: string;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   isLoggedIn,
   isSearchOpen,
+  className,
 }) => (
   <div
     className={cn(
       'relative flex-1 max-w-[500px]',
       isLoggedIn && !isSearchOpen ? 'hidden md:flex' : 'hidden',
-      isSearchOpen && 'block'
+      isSearchOpen && 'block',
+      className
     )}
   >
     <span className='absolute left-3 top-1/2 -translate-y-1/2 text-neutral-600 '>
