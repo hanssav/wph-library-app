@@ -14,7 +14,7 @@ import {
   LoansCardItem,
   LoansCardSkeleton,
 } from './components';
-import { STATUS_OPTIONS } from './borrowed-list.constants';
+import { STATUS_OPTIONS } from './components/borrowed-list.constants';
 import React from 'react';
 import type { GetLoansParams, LoanStatus } from '@/type';
 import { useLoans } from '@/hooks';
