@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Dot } from 'lucide-react';
 import { MainBookInfo } from '@/components/container/books';
 import { ReviewDialog } from './add-review-dialog';
+import { useUser } from '@/hooks';
 
 type LoansCardProps = BaseComponentProps & ComponentProps<'div'>;
 
@@ -43,6 +44,7 @@ const LabelBadge = ({
 type LoansCardItemProps = { loan: Loan };
 
 const LoansCardItem = ({ loan }: LoansCardItemProps) => {
+  const { isAdmin } = useUser();
   const dueAtFormat = formatDate(loan.dueAt);
   const startFormat = formatDate(loan.borrowedAt);
 
@@ -65,13 +67,21 @@ const LoansCardItem = ({ loan }: LoansCardItemProps) => {
             {startFormat} <Dot /> Duration {durationDays} Days
           </div>
         </MainBookInfo>
-
-        <ReviewDialog
-          bookId={loan.bookId}
-          trigger={
-            <Button className='w-full md:max-w-[182px]'>Give Review</Button>
-          }
-        />
+        {isAdmin ? (
+          <div className='space-y-0.5'>
+            <p className='text-sm-semibold md:text-md-semibold'>
+              borrower's name
+            </p>
+            <h1 className='text-md-bold md:text-xl-bold'>{'No Data'}</h1>
+          </div>
+        ) : (
+          <ReviewDialog
+            bookId={loan.bookId}
+            trigger={
+              <Button className='w-full md:max-w-[182px]'>Give Review</Button>
+            }
+          />
+        )}
       </div>
     </Card>
   );

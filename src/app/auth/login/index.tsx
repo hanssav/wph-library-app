@@ -15,6 +15,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { getDefaultRouteForRole } from '@/routes/protected-route';
 
 const Login = () => {
+  console.log('login page');
   const login = useLogin();
   const navigate = useNavigate();
   const location = useLocation();

@@ -1,6 +1,6 @@
 import { getErrorMessage } from '@/api';
 import { store } from '@/store';
-import { setCredentials } from '@/store/slices';
+import { setCredentials, setHydrated } from '@/store/slices';
 import {
   MutationCache,
   QueryCache,
@@ -38,16 +38,28 @@ const queryClient = new QueryClient({
 
 const AppProvider = ({ children }: Props) => {
   React.useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      const parsed = JSON.parse(user);
+    try {
+      const user = localStorage.getItem('user');
 
-      store.dispatch(
-        setCredentials({
-          token: parsed.token,
-          user: parsed.user,
-        })
-      );
+      if (user) {
+        const parsed = JSON.parse(user);
+
+        if (parsed.token && parsed.user) {
+          store.dispatch(
+            setCredentials({
+              token: parsed.token,
+              user: parsed.user,
+            })
+          );
+        } else {
+          store.dispatch(setHydrated());
+        }
+      } else {
+        store.dispatch(setHydrated());
+      }
+    } catch (error) {
+      localStorage.removeItem('user');
+      store.dispatch(setHydrated());
     }
   }, []);
 
