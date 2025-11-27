@@ -39,7 +39,7 @@ export const DeleteBookDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter>
+        <DialogFooter className='m-0'>
           <Button
             type='button'
             variant='outline'

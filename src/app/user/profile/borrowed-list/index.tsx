@@ -13,8 +13,8 @@ import {
   LoansCard,
   LoansCardItem,
   LoansCardSkeleton,
-} from './components';
-import { STATUS_OPTIONS } from './components/borrowed-list.constants';
+} from '@/components/pages/borrowed';
+import { STATUS_OPTIONS } from '@/components/pages/borrowed/borrowed-list.constants';
 import React from 'react';
 import type { GetLoansParams, LoanStatus } from '@/type';
 import { useLoans } from '@/hooks';

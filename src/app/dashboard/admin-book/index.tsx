@@ -1,8 +1,4 @@
 import {
-  FilterBadge,
-  FilterBadgeItem,
-} from '@/app/user/profile/borrowed-list/components';
-import {
   EmptyState,
   LoadMoreButton,
   QueryStateComp,
@@ -27,6 +23,7 @@ import type { BookSearchParams } from '@/type';
 import { EMPTY_BOOKS_DATA } from '@/constants';
 import { DeleteBookDialog } from './components/book-dialog-delete';
 import { useDeleteAdminBook } from './use-delete-admin-book';
+import { FilterBadge, FilterBadgeItem } from '@/components/pages/borrowed';
 
 const AdminBookList = () => {
   const navigate = useNavigate();
