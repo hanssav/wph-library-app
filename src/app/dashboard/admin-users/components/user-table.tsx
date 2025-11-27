@@ -88,7 +88,7 @@ export const UsersTable = <T extends { id: number | string }>({
           <TableRow>
             <TableCell
               colSpan={columns.length}
-              className='text-center py-12 text-muted-foreground'
+              className='text-center py-12 text-neutral-950'
             >
               {emptyMessage}
             </TableCell>

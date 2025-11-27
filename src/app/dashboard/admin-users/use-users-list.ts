@@ -13,7 +13,7 @@ export const useUserList = () => {
     () => ({
       page,
       search: debouncedSearch,
-      limit: 10,
+      limit: 20,
     }),
     [page, debouncedSearch]
   );

@@ -12,7 +12,7 @@ export const userColumns = [
     id: 'no',
     label: 'No',
     render: (_, index: number) => (
-      <span className='text-muted-foreground'>{index + 1}</span>
+      <span className='text-muted-foreground'>{index}</span>
     ),
   },
   {
