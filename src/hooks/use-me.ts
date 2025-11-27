@@ -61,6 +61,20 @@ export const useUpdateMe = () => {
 
     onSuccess: (response) => {
       queryClient.setQueryData(['me'], response);
+
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+      queryClient.invalidateQueries({
+        queryKey: ['users'],
+      });
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === 'me' ||
+          query.queryKey.includes('user') ||
+          query.queryKey.includes('profile') ||
+          query.queryKey.includes('admin') ||
+          query.queryKey.includes('auth'),
+      });
+
       toast.success('Name updated successfully!');
     },
 
