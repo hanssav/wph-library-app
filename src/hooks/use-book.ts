@@ -12,6 +12,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  type InfiniteData,
 } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -106,6 +107,61 @@ export const useUpdateBook = () => {
 
       toast.success('Book successfully updated');
       navigate(DASHBOARD_PATH.BOOK_LIST);
+    },
+  });
+};
+
+export const useDeleteBook = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => bookService.detele(id),
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: bookKeys.all() });
+
+      const prevData = queryClient.getQueriesData({ queryKey: bookKeys.all() });
+
+      // Update infinite query
+      queryClient.setQueriesData<InfiniteData<BookListResponse>>(
+        { queryKey: ['books'] },
+        (old) => {
+          if (!old) return old;
+
+          return {
+            ...old,
+            pages: old.pages.map((page) => ({
+              ...page,
+              data: {
+                ...page.data,
+                books: page.data.books.filter((book) => book.id !== id),
+                pagination: {
+                  ...page.data.pagination,
+                  total: page.data.pagination.total - 1,
+                },
+              },
+            })),
+          };
+        }
+      );
+
+      return { prevData };
+    },
+
+    onSuccess: () => {
+      toast.success('Book deleted successfully');
+      queryClient.invalidateQueries({ queryKey: bookKeys.all() });
+    },
+
+    onError: (_, __, context) => {
+      // Restore previous data
+      if (context?.prevData) {
+        context.prevData.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
     },
   });
 };

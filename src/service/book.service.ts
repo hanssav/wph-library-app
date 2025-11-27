@@ -20,4 +20,5 @@ export const bookService = {
     apiService.post<CreateBookApiResponse>('/books', req),
   update: async (id: number, req: BookReq) =>
     apiService.put(`/books/${id}`, req),
+  detele: async (id: number) => apiService.delete(`/books/${id}`),
 };

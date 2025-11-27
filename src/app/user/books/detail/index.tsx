@@ -1,12 +1,9 @@
 import { useBook, useBooksInfinite } from '@/hooks';
 import { useParams } from 'react-router-dom';
 import {
-  BookDesc,
-  BookImage,
-  BookInfo,
-  BookStats,
+  BookDetails,
   BreadcrumbsDetail,
-} from './components/book-detail';
+} from '@/components/pages/book/book-detail';
 import { Hr } from '@/components/ui/hr';
 import {
   BookCard,
@@ -46,31 +43,15 @@ const BooksDetail = () => {
     );
   }
 
-  const { description, title, coverImage, Category, Author, rating, Review } =
-    book;
+  const { title, rating, Review } = book;
 
   return (
     <div className='base-container'>
       <section className='flex-col-start gap-4 md:gap-6 w-full'>
         <BreadcrumbsDetail book={title} />
-        <div className='flex flex-col md:flex-row md:mx-0 gap-8'>
-          <div className='flex-center'>
-            <BookImage coverImage={coverImage} />
-          </div>
-          <div className='flex-col-start flex-1 gap-4 md:gap-5'>
-            <div className='space-y-3 md:space-y-[22px]'>
-              <BookInfo
-                author={Author?.name || 'Unknown'}
-                categoryName={Category.name}
-                bookTitle={title}
-                rating={rating}
-              />
-              <BookStats book={book} />
-              <BookDesc desc={description} />
-            </div>
-            <ButtonActions />
-          </div>
-        </div>
+        <BookDetails book={book}>
+          <ButtonActions />
+        </BookDetails>
       </section>
       <Hr />
       <SectionWrapper

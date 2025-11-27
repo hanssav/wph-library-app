@@ -25,6 +25,8 @@ import { useNavigate } from 'react-router-dom';
 import { DASHBOARD_PATH } from '@/constants/base.constants';
 import type { BookSearchParams } from '@/type';
 import { EMPTY_BOOKS_DATA } from '@/constants';
+import { DeleteBookDialog } from './components/book-dialog-delete';
+import { useDeleteAdminBook } from './use-delete-admin-book';
 
 const AdminBookList = () => {
   const navigate = useNavigate();
@@ -38,6 +40,15 @@ const AdminBookList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useBooksInfinite(debounceParams);
   const books = data?.pages.flatMap((page) => page.data.books) ?? [];
+
+  const {
+    deleteDialogOpen,
+    handleDeleteClick,
+    handleDeleteConfirm,
+    selectedBookTitle,
+    setDeleteDialogOpen,
+    deleteBook,
+  } = useDeleteAdminBook();
 
   return (
     <SectionWrapper title='Book List' className='w-full'>
@@ -77,7 +88,13 @@ const AdminBookList = () => {
           Skeleton={AdminBookCardItemSkeleton}
           fallback={<EmptyState data={EMPTY_BOOKS_DATA} />}
         >
-          {(book) => <AdminBookCardItem book={book} key={book.id} />}
+          {(book) => (
+            <AdminBookCardItem
+              book={book}
+              key={book.id}
+              onDeleteClick={handleDeleteClick}
+            />
+          )}
         </QueryStateComp>
       </AdminBookCard>
       {books.length > 0 && (
@@ -87,6 +104,13 @@ const AdminBookList = () => {
           isFetchingNextPage={isFetchingNextPage}
         />
       )}
+      <DeleteBookDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
+        isLoading={deleteBook.isPending}
+        bookTitle={selectedBookTitle}
+      />
     </SectionWrapper>
   );
 };

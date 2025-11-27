@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import type { BaseComponentProps, Book } from '@/type';
 import type { ComponentProps } from 'react';
-import { BOOK_ACTIONS } from './book.constants';
+import { BOOK_ACTIONS, type BookAction } from './book.constants';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,8 +22,23 @@ const AdminBookCard = ({
   );
 };
 
-const AdminBookCardItem = ({ book }: { book: Book }) => {
+const AdminBookCardItem = ({
+  book,
+  onDeleteClick,
+}: {
+  book: Book;
+  onDeleteClick: (bookId: number, bookTitle: string) => void;
+}) => {
   const navigate = useNavigate();
+
+  const handleAction = (action: BookAction) => {
+    if (action.requiresDialog) {
+      onDeleteClick(book.id, book.title);
+    } else if (action.onClick) {
+      action.onClick(book.id, navigate);
+    }
+  };
+
   return (
     <Card>
       <div className='md:flex-between w-full'>
@@ -36,7 +51,7 @@ const AdminBookCardItem = ({ book }: { book: Book }) => {
               key={act.id}
               variant={'outline'}
               className={cn('px-4 py-1', act.className)}
-              onClick={() => act.onClick(book.id, navigate)}
+              onClick={() => handleAction(act)}
             >
               {act.label}
             </Button>
