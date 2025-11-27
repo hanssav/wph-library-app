@@ -13,7 +13,7 @@ import {
   HOME_PATH,
   PROFILE_PATH,
 } from '@/constants/base.constants';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLogout, useUser } from '@/hooks';
 import { Logo } from './components/nav-logo';
 import { SearchBar } from './components/nav-search-bar';
@@ -27,6 +27,8 @@ import { UserNotLoginButton } from './components/nav-user-not-login-button';
 const UserNavbar = () => {
   const navigate = useNavigate();
   const { token, user, isAdmin } = useUser();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [isOpenMenu, setIsOpenMenu] = React.useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState<boolean>(false);
@@ -44,6 +46,14 @@ const UserNavbar = () => {
           isLoggedIn={isLoggedIn}
           isSearchOpen={isSearchOpen}
           className={cn(isAdmin && 'hidden!')}
+          value={searchParams.get('q') ?? ''}
+          onChange={(e) => {
+            if (e.target.value) {
+              setSearchParams({ q: e.target.value });
+            } else {
+              setSearchParams({});
+            }
+          }}
         />
         <CloseSearchButton
           isSearchOpen={isSearchOpen}

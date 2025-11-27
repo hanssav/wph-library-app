@@ -1,17 +1,19 @@
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Search } from 'lucide-react';
+import type { ComponentProps } from 'react';
 
-interface SearchBarProps {
+type SearchBarProps = {
   isLoggedIn: boolean;
   isSearchOpen: boolean;
   className?: string;
-}
+} & ComponentProps<'input'>;
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   isLoggedIn,
   isSearchOpen,
   className,
+  ...props
 }) => (
   <div
     className={cn(
@@ -28,6 +30,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       name='search'
       className='rounded-full h-10 md:h-11 pl-10'
       placeholder='Search book'
+      {...props}
     ></Input>
   </div>
 );

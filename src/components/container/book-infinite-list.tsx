@@ -5,9 +5,11 @@ import {
   BookCardSkeleton,
   LoadMoreButton,
   QueryStateComp,
+  EmptyState,
 } from '@/components/container';
 import type { Book, BookSearchParams } from '@/type';
 import { useBooksInfinite } from '@/hooks';
+import { EMPTY_BOOKS_DATA } from '@/constants';
 
 interface BookInfiniteListProps {
   params: BookSearchParams;
@@ -33,9 +35,8 @@ export const BookInfiniteList: React.FC<BookInfiniteListProps> = ({
   } = useBooksInfinite(params);
 
   const books = booksData?.pages.flatMap((page) => page.data.books) ?? [];
-
   const defaultRender = (book: Book) => <BookCard key={book.id} book={book} />;
-
+  const isEmpty = books.length === 0;
   return (
     <>
       <BooksList className={className}>
@@ -48,6 +49,7 @@ export const BookInfiniteList: React.FC<BookInfiniteListProps> = ({
               ))}
             </>
           }
+          fallback={<EmptyState data={EMPTY_BOOKS_DATA} />}
         >
           {books.map((book) =>
             renderBook ? renderBook(book) : defaultRender(book)
@@ -55,7 +57,9 @@ export const BookInfiniteList: React.FC<BookInfiniteListProps> = ({
         </QueryStateComp>
       </BooksList>
 
-      {isInfinite && (
+      {isEmpty && <EmptyState data={EMPTY_BOOKS_DATA} />}
+
+      {isInfinite && hasNextPage && !isEmpty && (
         <LoadMoreButton
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage}
