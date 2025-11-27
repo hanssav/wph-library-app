@@ -58,7 +58,6 @@ export const BookInfiniteList: React.FC<BookInfiniteListProps> = ({
       </BooksList>
 
       {isEmpty && <EmptyState data={EMPTY_BOOKS_DATA} />}
-
       {isInfinite && hasNextPage && !isEmpty && (
         <LoadMoreButton
           fetchNextPage={fetchNextPage}

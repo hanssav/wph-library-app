@@ -1,6 +1,4 @@
-import React from 'react';
 import { BookInfiniteList, SectionWrapper } from '@/components/container';
-import type { BookSearchParams } from '@/type';
 import SelectFilter from './components/select-filter';
 import {
   FilterCheckboxItem,
@@ -11,9 +9,10 @@ import {
 import { CATEGORY_FILTERS } from './components/filter.costants';
 import { Hr } from '@/components/ui/hr';
 import { Card } from '@/components/ui/card';
+import { useParamsSearchBooks } from '@/hooks/use-params-search-book';
 
 const BooksList = () => {
-  const [params] = React.useState<BookSearchParams>({ limit: 10 });
+  const { params } = useParamsSearchBooks();
 
   return (
     <SectionWrapper title='Book List' className='base-container'>
@@ -39,11 +38,9 @@ const BooksList = () => {
             </FilterSection>
           </Card>
         </aside>
-        <BookInfiniteList
-          className='lg:grid-cols-4 lg:col-span-10'
-          params={params}
-          isInfinite={false}
-        />
+        <div className='lg:col-span-10'>
+          <BookInfiniteList className='lg:grid-cols-4' params={params} />
+        </div>
       </div>
     </SectionWrapper>
   );

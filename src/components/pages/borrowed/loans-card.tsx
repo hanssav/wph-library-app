@@ -68,7 +68,7 @@ const LoansCardItem = ({ loan }: LoansCardItemProps) => {
           </div>
         </MainBookInfo>
         {isAdmin ? (
-          <div className='space-y-0.5'>
+          <div className='space-y-0.5g'>
             <p className='text-sm-semibold md:text-md-semibold'>
               borrower's name
             </p>

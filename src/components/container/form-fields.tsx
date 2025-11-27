@@ -39,7 +39,7 @@ const FormFields = <T extends FieldValues>({ control, config }: Props<T>) => {
               <Textarea
                 placeholder={placeholder}
                 {...field}
-                className='min-h-[100px]'
+                className='min-h-[100px] max-h-96 resize-none overflow-y-auto'
               />
             );
             break;

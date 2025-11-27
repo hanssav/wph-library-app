@@ -91,7 +91,7 @@ export const ReviewDialog = ({ bookId, trigger }: ReviewDialogProps) => {
               setError({});
             }}
             placeholder='Please share your thoughts about this book'
-            className='w-full min-h-[200px]'
+            className='w-full min-h-[200px] max-h-96 resize-none overflow-y-auto'
           />
           {error.comment && (
             <p className='text-sm text-destructive'>{error.comment}</p>

@@ -3,6 +3,7 @@ import type { RootState } from '@/store';
 import type { AddCartReq, ApiResponse, CartData, CartItem } from '@/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import { toast } from 'sonner';
 
 export const cartKeys = {
   getAll: ['cart', 'all'] as const,
@@ -31,7 +32,6 @@ export const useCartCount = () => {
   const { data, isLoading } = useCart();
 
   const count = data?.items.reduce((total, item) => total + item.qty, 0) ?? 0;
-
   return { count, isLoading };
 };
 
@@ -97,6 +97,7 @@ export const useAddToCart = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: cartKeys.getAll });
+      toast.success('added to cart');
     },
   });
 };
