@@ -1,4 +1,11 @@
-export type FieldType = 'text' | 'password' | 'email' | 'textarea' | 'file';
+export type FieldType =
+  | 'text'
+  | 'password'
+  | 'email'
+  | 'textarea'
+  | 'file'
+  | 'number'
+  | 'select';
 
 export type FormFieldType = {
   name: string;
@@ -6,4 +13,6 @@ export type FormFieldType = {
   type: FieldType;
   placeholder?: string;
   autoComplete?: string;
+
+  options?: { label: string; value: number }[];
 };

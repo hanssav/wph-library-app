@@ -83,3 +83,5 @@ export type BookDetail = Book & {
 };
 
 export type BookDetailApiResponse = ApiResponse<BookDetail>;
+export type CreateBookApiResponse = ApiResponse<Book>;
+export type UpdateBookApiResponse = ApiResponse<Book>;
