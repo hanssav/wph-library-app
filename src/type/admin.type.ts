@@ -12,6 +12,7 @@ export type User = {
 export type GetAllUserParams = {
   page?: number;
   limit?: number;
+  search?: string;
 };
 
 export type UserListResponse = ApiResponse<{

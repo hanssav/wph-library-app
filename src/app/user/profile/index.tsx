@@ -12,7 +12,7 @@ import {
   DialogHeader,
 } from '@/components/ui/dialog';
 import { useMe, useUpdateMe } from '@/hooks';
-import { getImage, avatarImage } from '@/lib/utils';
+import { getImage } from '@/lib/utils';
 import {
   Dialog,
   DialogTrigger,
@@ -28,6 +28,7 @@ import React from 'react';
 import { nameFIeld, profileData } from './profile.constants';
 import { TextInfo } from '@/components/pages/profile/text-info';
 import { ProfileCardSkeleton } from '@/components/pages/profile/profile-card-skeleton';
+import { avatarImage } from '@/constants';
 
 const Profile = () => {
   const { data, isLoading } = useMe();

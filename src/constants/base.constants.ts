@@ -47,3 +47,7 @@ export const DASHBOARD_PATH = {
   BOOK_LIST: '/dashboard/book-list',
   BORROWED_LIST: '/dashboard/borrowed-list',
 };
+
+export const coverImage =
+  'https://www.huber-usa.com/daisy_website_files/_processed_/8/0/csm_no-image_d5c4ab1322.jpg';
+export const avatarImage = 'https://github.com/shadcn.png';

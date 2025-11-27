@@ -15,8 +15,9 @@ const buttonVariants = cva(
           'text-white bg-accent-red hover:bg-accent-red/90 hover:shadow-card',
         outline:
           'border border-neutral-300 hover:shadow-card font-bold text-neutral-950 disabled:text-neutral-400 disabled:shadow-none',
+        ghost:
+          'border rounded-md border-transparent hover:border-neutral-300 hover:bg-neutral-100 hover:shadow-card font-bold text-neutral-950 data-[active=true]:bg-neutral-950 data-[active=true]:text-white data-[active=true]:border-neutral-950 disabled:text-neutral-400 disabled:shadow-none disabled:hover:border-transparent disabled:hover:bg-transparent',
         secondary: '',
-        ghost: '',
         link: 'text-primary-500 underline-offset-4 hover:underline',
       },
       size: {

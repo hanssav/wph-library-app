@@ -1,5 +1,6 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { getImage, avatarImage } from '@/lib/utils';
+import { avatarImage } from '@/constants';
+import { getImage } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 
 interface UserAvatarTriggerProps {

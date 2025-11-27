@@ -5,7 +5,7 @@ export const adminKeys = {
   user: (id: number) => ['admin', 'user', id] as const,
 };
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { adminService } from '@/service';
 
 export const useUsersInfinite = (params?: GetAllUserParams) => {
@@ -28,5 +28,13 @@ export const useUsersInfinite = (params?: GetAllUserParams) => {
       return page > 1 ? page - 1 : undefined;
     },
     initialPageParam: 1,
+  });
+};
+
+export const useUsers = (params?: GetAllUserParams) => {
+  return useQuery<UserListResponse>({
+    queryKey: adminKeys.users(params),
+    queryFn: () => adminService.getUsers(params),
+    placeholderData: (previousData) => previousData,
   });
 };
