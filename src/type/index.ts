@@ -8,3 +8,4 @@ export * from './me.type';
 export * from './review.type';
 export * from './cart.type';
 export * from './category.type';
+export * from './admin.type';

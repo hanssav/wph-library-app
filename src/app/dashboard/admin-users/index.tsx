@@ -1,5 +1,11 @@
+import { useUsersInfinite } from '@/hooks/use-admin';
+
 const AdminUsers = () => {
-  console.log('i am user s');
+  const { data } = useUsersInfinite();
+
+  const users = data?.pages.flatMap((res) => res.data.users);
+
+  console.log(users, 'data');
   return <div>AdminUsers</div>;
 };
 
