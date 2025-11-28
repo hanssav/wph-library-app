@@ -1,6 +1,7 @@
 import type { ApiResponse, Pagination } from './api.type';
 import type { AuthUser } from './auth.type';
 import type { Book } from './book.type';
+import type { Loan, LoanStatus } from './loan.type';
 import type { Review } from './review.type';
 
 export type LoanStats = {
@@ -32,21 +33,12 @@ export type UpdateProfileApiResponse = {
   data: UpdateProfileResponseData;
 };
 
-export type LoanStatus = 'BORROWED' | 'LATE' | 'RETURNED'; // based on your description
-
-export type Loan = {
-  id: number;
-  userId: number;
-  bookId: number;
-  status: LoanStatus; // you can extend this later
-  borrowedAt: string; // ISO string
-  dueAt: string; // ISO string
-  returnedAt: string | null;
+export type MeLoan = {
   Book: Book;
-};
+} & Loan;
 
 export type LoansData = {
-  loans: Loan[];
+  loans: MeLoan[];
   pagination: Pagination;
 };
 

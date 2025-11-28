@@ -13,6 +13,7 @@ import BooksDetail from '@/app/user/books/detail';
 import BooksList from '@/app/user/books/list';
 import Cart from '@/app/user/cart';
 import Checkout from '@/app/user/checkout';
+import CheckoutSuccess from '@/app/user/checkout/success';
 import Home from '@/app/user/home';
 import Profile from '@/app/user/profile';
 import BorrowedList from '@/app/user/profile/borrowed-list';
@@ -66,6 +67,7 @@ export default function AppRoutes() {
         </Route>
         <Route path='cart' element={<Cart />} />
         <Route path='checkout' element={<Checkout />} />
+        <Route path='checkout/success' element={<CheckoutSuccess />} />
       </Route>
 
       <Route path='/dashboard'>

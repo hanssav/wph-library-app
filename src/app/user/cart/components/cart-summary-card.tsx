@@ -1,16 +1,14 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardTitle } from '@/components/ui/card';
-import { CHECKOUT_PATH } from '@/constants/base.constants';
 import { cn } from '@/lib/utils';
-import { useNavigate } from 'react-router-dom';
 
 export type CartSummaryProps = {
   selected: number[];
+  onLoans: () => void;
 };
 
-const CartSummaryCard = ({ selected }: CartSummaryProps) => {
+const CartSummaryCard = ({ selected, onLoans }: CartSummaryProps) => {
   const itemCount = selected.length;
-  const navigate = useNavigate();
 
   const SummaryContent = ({ isMobile = false }: { isMobile?: boolean }) => (
     <div className={cn('space-y-6', isMobile ? 'flex-between gap-3' : '')}>
@@ -33,7 +31,7 @@ const CartSummaryCard = ({ selected }: CartSummaryProps) => {
       </div>
 
       <Button
-        onClick={() => navigate(CHECKOUT_PATH)}
+        onClick={onLoans}
         className={cn('h-12', isMobile ? 'min-w-[150px]' : 'w-full mt-6')}
       >
         Borrow Book
