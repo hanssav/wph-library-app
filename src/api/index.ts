@@ -1,5 +1,7 @@
 import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
 import { APIConfiguration } from './config';
+import { store } from '@/store';
+import { clearAuth } from '@/store/slices';
 
 export const apiInstance = axios.create({
   baseURL: APIConfiguration.baseUrl,
@@ -8,17 +10,22 @@ export const apiInstance = axios.create({
   },
 });
 
-// ==== USE TOKEN FRON STORAGE EVERY REQUEST ====
-apiInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken');
+apiInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
+// Response Interceptor  →automatic logout 401
+apiInstance.interceptors.response.use(
+  (res) => res,
   (error) => {
+    if (error.response?.status === 401) {
+      store.dispatch(clearAuth());
+      localStorage.clear();
+    }
     return Promise.reject(error);
   }
 );
@@ -62,12 +69,42 @@ export const apiService = {
   },
 };
 
+interface ErrorResponse {
+  message?: string;
+  error?: string;
+  errors?: Record<string, string[]>;
+}
+
 export function getErrorMessage(err: unknown): string {
+  // Handle Axios errors
   if (axios.isAxiosError(err)) {
-    const ax = err as AxiosError<{ message?: string }>;
-    return ax.response?.data?.message ?? err.message;
+    const axiosError = err as AxiosError<ErrorResponse>;
+
+    // Priority: response.data.message > response.data.error > err.message
+    const message =
+      axiosError.response?.data?.message ??
+      axiosError.response?.data?.error ??
+      axiosError.message;
+
+    return message || 'An error occurred';
   }
-  return (err as { message?: string })?.message ?? 'Unknown error';
+
+  // Handle standard Error objects
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  // Handle string errors
+  if (typeof err === 'string') {
+    return err;
+  }
+
+  // Handle object with message property
+  if (err && typeof err === 'object' && 'message' in err) {
+    return String(err.message);
+  }
+
+  return 'Unknown error';
 }
 
 export function isAuthError(err: unknown): boolean {
