@@ -19,8 +19,15 @@ export const meKeys = {
   review: (params?: GetReviewParams) => ['me', 'reviews', params],
 };
 
-export const useMe = () =>
-  useQuery({ queryKey: meKeys.get, queryFn: meService.me });
+export const useMe = (options?: { enabled?: boolean }) => {
+  console.log(options, 'option');
+  return useQuery({
+    queryKey: meKeys.get,
+    queryFn: meService.me,
+    enabled: options?.enabled !== undefined ? options.enabled : true,
+    ...options,
+  });
+};
 
 export const useUpdateMe = () => {
   const queryClient = useQueryClient();

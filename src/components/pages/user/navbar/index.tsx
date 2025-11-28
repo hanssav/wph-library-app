@@ -76,7 +76,7 @@ const UserNavbar = () => {
           <DropdownMenu open={isOpenMenu} onOpenChange={setIsOpenMenu}>
             <DropdownMenuTrigger className={cn(!isLoggedIn && 'md:hidden')}>
               {isLoggedIn ? (
-                <UserAvatarTrigger userName={user?.name} />
+                <UserAvatarTrigger userName={user?.profile?.name} />
               ) : (
                 <MobileMenuToggle isOpenMenu={isOpenMenu} />
               )}

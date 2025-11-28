@@ -11,16 +11,12 @@ import {
   TextLoading,
 } from '@/components/pages/auth';
 import { loginSection, loginFields } from '../auth.constants';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getDefaultRouteForRole } from '@/routes/protected-route';
 
 const Login = () => {
-  console.log('login page');
   const login = useLogin();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = location.state?.from?.pathname || null;
 
   const form = useForm<LoginRequest>({
     resolver: zodResolver(LoginRequestSchema),
@@ -35,12 +31,9 @@ const Login = () => {
       onSuccess: (data) => {
         const userRole = data.data.user.role;
 
-        if (from && from !== '/auth/login' && from !== '/auth/register') {
-          navigate(from, { replace: true });
-        } else {
-          const defaultRoute = getDefaultRouteForRole(userRole);
-          navigate(defaultRoute, { replace: true });
-        }
+        const defaultRoute = getDefaultRouteForRole(userRole);
+
+        navigate(defaultRoute, { replace: true });
       },
     });
   };

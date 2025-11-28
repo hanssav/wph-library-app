@@ -13,9 +13,6 @@ export const useBookForm = (id: string | undefined, isCreate: boolean) => {
   const createBook = useCreateBooks();
   const isLoading = createBook.isPending || updateBook.isPending;
 
-  console.log(id, 'id');
-  console.log(isCreate);
-
   const { data: bookData } = useBook(Number(id), {
     enabled: !isCreate && !!id,
   });

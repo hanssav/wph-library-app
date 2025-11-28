@@ -2,7 +2,7 @@ import { getErrorMessage } from '@/api';
 import type { LoginRequest, RegisterRequest } from '@/schema';
 import { authService } from '@/service/auth.service';
 import { useAppDispatch } from '@/store';
-import { clearAuth, setCredentials } from '@/store/slices';
+import { clearAuth } from '@/store/slices';
 import type { LoginSuccessResponse } from '@/type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ export const authKeys = {
 };
 
 export const useLogin = () => {
-  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (req: LoginRequest) => {
@@ -25,13 +25,10 @@ export const useLogin = () => {
       return res;
     },
     onSuccess: (res: LoginSuccessResponse) => {
-      const user = { token: res.data.token, user: res.data.user };
+      const token = res.data.token;
+      localStorage.setItem('token', token);
 
-      dispatch(setCredentials(user));
-
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('user', JSON.stringify(user));
-
+      queryClient.refetchQueries({ queryKey: ['me'] });
       toast.success('Login successful!');
     },
   });

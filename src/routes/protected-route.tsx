@@ -1,7 +1,9 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import type { UserRole } from '@/type';
-import { useUser } from '@/hooks';
-import React from 'react';
+import { useMe } from '@/hooks';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from '@/store';
+import { setCredentials, clearAuth } from '@/store/slices';
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -15,26 +17,35 @@ const ProtectedRoute = ({
   requireAuth = true,
 }: ProtectedRouteProps) => {
   const location = useLocation();
-  const { user, token, isLoading } = useUser();
+  const dispatch = useAppDispatch();
+  const token = localStorage.getItem('token');
+
+  const { data, isLoading, isError } = useMe({ enabled: !!token });
+  const user = data?.data;
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (token && user) {
+      dispatch(setCredentials({ token, user: user }));
+    } else {
+      dispatch(clearAuth());
+    }
+  }, [user, isLoading, isError, dispatch, token]);
 
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary' />
+        <div className='animate-spin rounded-full size-20 border-b-2 border-primary-500' />
       </div>
     );
   }
 
-  const isAuthenticated = !!token && !!user;
-  const userRole = user?.role;
+  const isAuthenticated = !!token && user;
+  const userRole = user?.profile.role;
 
   if (requireAuth && !isAuthenticated) {
     return <Navigate to='/auth/login' state={{ from: location }} replace />;
-  }
-
-  if (!requireAuth && isAuthenticated) {
-    const defaultRoute = getDefaultRouteForRole(userRole);
-    return <Navigate to={defaultRoute} replace />;
   }
 
   if (allowedRoles && allowedRoles.length > 0) {

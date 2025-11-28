@@ -7,8 +7,6 @@ export const useBookFields = () => {
   const { data: categories } = useCategories();
   const { data: authors } = useAuthors();
 
-  console.log(categories, 'categories');
-
   const fields = React.useMemo(() => {
     return bookFields.map((f) => {
       if (f.name === 'authorId') {

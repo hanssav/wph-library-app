@@ -1,9 +1,9 @@
-import type { AuthUser } from '@/type';
+import type { MeResponseData } from '@/type';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type AuthState = {
   token: string | null;
-  user: AuthUser | null;
+  user: MeResponseData | null;
   isHydrated: boolean;
 };
 
@@ -19,7 +19,7 @@ export const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ token: string; user: AuthUser }>
+      action: PayloadAction<{ token: string; user: MeResponseData }>
     ) => {
       state.token = action.payload.token;
       state.user = action.payload.user;

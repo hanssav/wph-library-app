@@ -25,7 +25,13 @@ import { Routes, Route } from 'react-router-dom';
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route
+        element={
+          <ProtectedRoute requireAuth={false}>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
         <Route index element={<Home />} />
         <Route path='books'>
           <Route index element={<BooksList />} />
