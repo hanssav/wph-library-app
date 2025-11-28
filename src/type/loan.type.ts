@@ -3,7 +3,7 @@ export type LoanBookRequest = {
   qty: number;
 };
 
-export type LoanStatus = 'BORROWED' | 'RETURNED' | 'OVERDUE';
+export type LoanStatus = 'BORROWED' | 'RETURNED' | 'OVERDUE' | 'LATE';
 
 export type Loan = {
   id: number;

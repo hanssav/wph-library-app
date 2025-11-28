@@ -1,30 +1,33 @@
 import { SectionWrapper } from '@/components/container';
 import { CheckoutTitle, CheckoutWrapper } from './components/checkout-item';
 import { TextInfo } from '@/components/pages/profile/text-info';
-import { useLoanBooks, useMe } from '@/hooks';
 import { profileData } from '../profile/profile.constants';
 import { CartCard, CartCardItems } from '../cart/components';
 import { Hr } from '@/components/ui/hr';
 import { Input } from '@/components/ui/input';
-import React from 'react';
-import type { BaseComponentProps } from '@/type';
 import { cn, formatDate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { BORROW_DURATIONS, BORROW_TERMS } from './components/constants';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useSelector } from 'react-redux';
-import { useAppDispatch, type RootState } from '@/store';
+import { BORROW_DURATIONS, BORROW_TERMS } from './components/constants';
 import { toast } from 'sonner';
 import { TextLoading } from '@/components/pages/auth';
-import { setBookLoansItems } from '@/store/slices';
+
+import { useBorrowCheckout } from './hooks/use-borrow-checkout';
+import { useBorrowData } from './hooks/use-borrow-data';
+import { useDueDate } from './hooks/use-due-date';
+import { useBorrowForm } from './hooks/use-loan-form';
 
 const ContentWrapper = ({
   title,
   className,
   children,
-}: { title: string } & BaseComponentProps) => (
+}: {
+  title: string;
+  className?: string;
+  children: React.ReactNode;
+}) => (
   <div className={cn('space-y-3', className)}>
     <h2 className='text-sm-bold md:text-md-bold'>{title}</h2>
     {children}
@@ -32,110 +35,42 @@ const ContentWrapper = ({
 );
 
 const Checkout = () => {
-  const dispatch = useAppDispatch();
+  const { profile, loansData } = useBorrowData();
 
-  const loansData = useSelector((state: RootState) => state.bookLoans.datas);
+  const {
+    selectedDuration,
+    acceptedTerms,
+    errors,
+    validateForm,
+    handleDurationChange,
+    handleTermChange,
+  } = useBorrowForm();
 
-  const { data: user } = useMe();
-  if (!user) throw new Error('user not foud');
+  const dueDate = useDueDate(selectedDuration);
+  const { onCheckout, isPending } = useBorrowCheckout(loansData);
 
-  const [selectedDuration, setSelectedDuration] = React.useState<string>('');
-  const [acceptedTerms, setAcceptedTerms] = React.useState<
-    Record<string, boolean>
-  >({});
-  const [errors, setErrors] = React.useState<{
-    duration?: string;
-    terms?: string;
-  }>({});
-  const profile = user?.data.profile;
-
-  const dueDate = new Date();
-  dueDate.setDate(dueDate.getDate() + Number(selectedDuration));
-
-  const validateForm = (): boolean => {
-    const newErrors: typeof errors = {};
-
-    if (!selectedDuration) {
-      newErrors.duration = 'Please select a borrow duration';
-    }
-
-    const allTermsAccepted = BORROW_TERMS.every(
-      (term) => acceptedTerms[term.id]
-    );
-    if (!allTermsAccepted) {
-      newErrors.terms = 'Please accept all terms and conditions';
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleTermChange = (termId: string, checked: boolean) => {
-    setAcceptedTerms((prev) => ({
-      ...prev,
-      [termId]: checked,
-    }));
-    if (errors.terms) {
-      setErrors((prev) => ({ ...prev, terms: undefined }));
-    }
-  };
-
-  const handleDurationChange = (value: string) => {
-    setSelectedDuration(value);
-    if (errors.duration) {
-      setErrors((prev) => ({ ...prev, duration: undefined }));
-    }
-  };
-
-  const { mutate, isPending } = useLoanBooks();
-
-  const onCheckout = () => {
+  const handleSubmit = () => {
     if (!validateForm()) {
       toast.error('Please complete all required fields');
       return;
     }
-
-    if (loansData.length === 0) {
-      toast.error('Keranjang pinjaman kosong');
-      return;
-    }
-
-    const days = Number(selectedDuration);
-    if (!selectedDuration || isNaN(days) || days <= 0) {
-      toast.error('Pilih durasi pinjaman');
-      return;
-    }
-
-    const requests = loansData.map((item) => ({
-      bookId: item.bookId || item.id,
-      qty: item.qty,
-    }));
-
-    const cartItemIds = loansData
-      .map((item) => item.id)
-      .filter((id): id is number => typeof id === 'number');
-
-    dispatch(
-      setBookLoansItems({
-        datas: loansData,
-        duration: Number(selectedDuration),
-      })
-    );
-    mutate({ requests, cartItemIds });
+    onCheckout(selectedDuration);
   };
 
   return (
     <div className='base-container'>
       <SectionWrapper title='Checkout'>
-        <div className='flex flex-wrap overflow-hidden gap-6 lg:gap-[58px] '>
+        <div className='flex flex-wrap gap-6 lg:gap-[58px]'>
+          {/* Kiri: Info User + Daftar Buku */}
           <div className='flex-1 basis-80 space-y-4 md:space-y-8'>
             <CheckoutWrapper title='User Information'>
-              {profileData(profile).map((profile) => (
-                <TextInfo {...profile} key={profile.value} />
+              {profileData(profile).map((item) => (
+                <TextInfo {...item} key={item.label} />
               ))}
             </CheckoutWrapper>
+
             <Hr />
+
             <CheckoutWrapper title='Book List'>
               <CartCard className='flex-1 min-w-0'>
                 {loansData.map((cart) => (
@@ -144,18 +79,22 @@ const Checkout = () => {
               </CartCard>
             </CheckoutWrapper>
           </div>
+
+          {/* Kanan: Form Checkout */}
           <div className='flex-1 basis-80'>
-            <CheckoutWrapper className='space-y-5'>
+            <CheckoutWrapper className='space-y-6'>
               <CheckoutTitle sizeLg>Complete Your Borrow Request</CheckoutTitle>
 
-              <ContentWrapper title='Borrow Date' className='space-y-0.5'>
+              {/* Borrow Date (Hari ini) */}
+              <ContentWrapper title='Borrow Date'>
                 <Input
                   className='rounded-xl disabled:bg-neutral-200'
                   disabled
-                  value={formatDate(dueDate)}
+                  value={formatDate(new Date())}
                 />
               </ContentWrapper>
 
+              {/* Durasi Pinjaman */}
               <ContentWrapper title='Borrow Duration'>
                 <RadioGroup
                   value={selectedDuration}
@@ -170,7 +109,9 @@ const Checkout = () => {
                         value={String(duration.value)}
                         id={duration.id}
                       />
-                      <Label htmlFor={duration.id}>{duration.label}</Label>
+                      <Label htmlFor={duration.id} className='cursor-pointer'>
+                        {duration.label}
+                      </Label>
                     </div>
                   ))}
                 </RadioGroup>
@@ -179,45 +120,49 @@ const Checkout = () => {
                 )}
               </ContentWrapper>
 
+              {/* Return Date */}
               <ContentWrapper
-                className='p-3 rounded-[12px] bg-[#F6F9FE]'
                 title='Return Date'
+                className='p-4 rounded-[12px] bg-[#F6F9FE]'
               >
                 <p className='text-sm-medium lg:text-md-medium'>
-                  Please return the book no later than
+                  Please return the book no later than{' '}
                   <span className='text-[#EE1D52] text-md-bold'>
-                    {' '}
-                    {formatDate(new Date())}
+                    {dueDate ? formatDate(dueDate) : '-'}
                   </span>
                 </p>
               </ContentWrapper>
 
-              <div className='space-y-2'>
-                {BORROW_TERMS.map((terms) => (
-                  <div key={terms.id} className='flex gap-4'>
+              {/* Terms & Conditions */}
+              <div className='space-y-3'>
+                {BORROW_TERMS.map((term) => (
+                  <div key={term.id} className='flex items-start gap-3'>
                     <Checkbox
-                      checked={acceptedTerms[terms.id] || false}
+                      checked={!!acceptedTerms[term.id]}
                       onCheckedChange={(checked) =>
-                        handleTermChange(terms.id, checked as boolean)
+                        handleTermChange(term.id, checked === true)
                       }
+                      id={term.id}
                     />
-                    <label className='cursor-pointer' htmlFor={terms.id}>
-                      {terms.label}
-                    </label>
+                    <Label htmlFor={term.id} className='cursor-pointer text-sm'>
+                      {term.label}
+                    </Label>
                   </div>
                 ))}
                 {errors.terms && (
-                  <p className='text-sm text-red-500 mt-1'>{errors.terms}</p>
+                  <p className='text-sm text-red-500'>{errors.terms}</p>
                 )}
               </div>
 
+              {/* Tombol Submit */}
               <Button
-                onClick={onCheckout}
+                onClick={handleSubmit}
                 disabled={isPending || loansData.length === 0}
                 widthFull
+                className='text-lg'
               >
                 {isPending ? (
-                  <TextLoading>Loading ... </TextLoading>
+                  <TextLoading>Loading...</TextLoading>
                 ) : (
                   'Confirm & Borrow'
                 )}

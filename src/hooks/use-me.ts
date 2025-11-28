@@ -20,7 +20,6 @@ export const meKeys = {
 };
 
 export const useMe = (options?: { enabled?: boolean }) => {
-  console.log(options, 'option');
   return useQuery({
     queryKey: meKeys.get,
     queryFn: meService.me,

@@ -17,21 +17,19 @@ import {
 import { STATUS_OPTIONS } from '@/components/pages/borrowed/borrowed-list.constants';
 import React from 'react';
 import type { GetLoansParams, LoanStatus } from '@/type';
-import { useLoans } from '@/hooks';
 import { EmptyState } from '@/components/container/empty-state';
 import { EMPTY_LOANS_DATA } from '@/constants';
+import { useLoansOverdue } from '@/hooks/use-admin';
 
 const AdminBorrowedList = () => {
   const [params, setParams] = React.useState<GetLoansParams>({
-    limit: 10,
-    page: 1,
+    limit: 2,
     status: undefined,
   });
-
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useLoans(params);
+    useLoansOverdue(params);
 
-  const loans = data?.pages.flatMap((page) => page.data.loans) ?? [];
+  const loans = data?.pages.flatMap((page) => page.data.overdue) ?? [];
 
   return (
     <SectionWrapper title='Borrowed List' className='w-full'>

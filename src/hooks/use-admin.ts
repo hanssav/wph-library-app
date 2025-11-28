@@ -1,8 +1,14 @@
-import type { GetAllUserParams, UserListResponse } from '@/type';
+import type {
+  GetAllUserParams,
+  GetOverdueLoansResponse,
+  Pagination,
+  UserListResponse,
+} from '@/type';
 
 export const adminKeys = {
   users: (params?: GetAllUserParams) => ['admin', 'users', params] as const,
   user: (id: number) => ['admin', 'user', id] as const,
+  loans: (params?: Partial<Pagination>) => ['loans', 'overdue', params],
 };
 
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
@@ -36,5 +42,24 @@ export const useUsers = (params?: GetAllUserParams) => {
     queryKey: adminKeys.users(params),
     queryFn: () => adminService.getUsers(params),
     placeholderData: (previousData) => previousData,
+  });
+};
+
+export const useLoansOverdue = (params?: Partial<Pagination>) => {
+  return useInfiniteQuery<GetOverdueLoansResponse>({
+    queryKey: adminKeys.loans(params),
+    queryFn: ({ pageParam }) => {
+      const finalParams: Partial<Pagination> = {
+        ...params,
+        page: Number(pageParam),
+      };
+      const response = adminService.geLoansOverdue(finalParams);
+      return response;
+    },
+    getNextPageParam: (lasPage) => {
+      const { page, totalPages } = lasPage.data.pagination;
+      return page < totalPages ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
 };

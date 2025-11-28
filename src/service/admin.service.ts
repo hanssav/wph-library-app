@@ -1,5 +1,10 @@
 import { apiService } from '@/api';
-import type { GetAllUserParams, UserListResponse } from '@/type';
+import type {
+  GetAllUserParams,
+  GetOverdueLoansResponse,
+  Pagination,
+  UserListResponse,
+} from '@/type';
 
 export const adminService = {
   getUsers: async (params?: GetAllUserParams) => {
@@ -7,4 +12,8 @@ export const adminService = {
       params,
     });
   },
+  geLoansOverdue: async (params?: Partial<Pagination>) =>
+    await apiService.get<GetOverdueLoansResponse>('/admin/loans/overdue', {
+      params,
+    }),
 };
