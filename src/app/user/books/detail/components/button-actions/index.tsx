@@ -1,27 +1,17 @@
 import { Button } from '@/components/ui/button';
-import { useAddToCart } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import type { ComponentProps } from 'react';
 
 const ButtonActions = ({
   className,
   isMobile,
+  children,
 }: {
   className?: string;
   isMobile?: boolean;
+  children: React.ReactNode;
 }) => {
-  const addCart = useAddToCart();
-  const { id } = useParams();
-  const bookId = Number(id);
-
-  const handleAddToCart = () => {
-    addCart.mutate({
-      bookId,
-      qty: 1,
-    });
-  };
-
   return (
     <div
       className={cn(
@@ -32,17 +22,7 @@ const ButtonActions = ({
         className
       )}
     >
-      <Button
-        variant={'outline'}
-        className='flex-1 md:min-w-[130px] lg:min-w-[200px]'
-        onClick={handleAddToCart}
-        disabled={addCart.isPending}
-      >
-        {addCart.isPending ? 'Adding...' : 'Add To Cart'}
-      </Button>
-      <Button className='md:min-w-[130px] lg:min-w-[200px] flex-1'>
-        Borrow Book
-      </Button>
+      {children}
       <Button variant={'outline'} size={'icon-sm'} className='size-10 p-2'>
         <Share2 className='size-full' />
       </Button>
@@ -50,4 +30,24 @@ const ButtonActions = ({
   );
 };
 
-export default ButtonActions;
+type AddToCartBtnProps = { isPending: boolean } & ComponentProps<'button'>;
+
+const AddToCartBtn = ({ isPending, children, ...props }: AddToCartBtnProps) => (
+  <Button
+    variant={'outline'}
+    className='flex-1 md:min-w-[130px] lg:min-w-[200px]'
+    {...props}
+  >
+    {children}
+  </Button>
+);
+
+type BorrowBookBtnProps = ComponentProps<'button'>;
+
+const BorrowBookBtn = ({ children, ...props }: BorrowBookBtnProps) => (
+  <Button className='md:min-w-[130px] lg:min-w-[200px] flex-1' {...props}>
+    {children}
+  </Button>
+);
+
+export { ButtonActions, AddToCartBtn, BorrowBookBtn };

@@ -61,16 +61,13 @@ const Checkout = () => {
     <div className='base-container'>
       <SectionWrapper title='Checkout'>
         <div className='flex flex-wrap gap-6 lg:gap-[58px]'>
-          {/* Kiri: Info User + Daftar Buku */}
           <div className='flex-1 basis-80 space-y-4 md:space-y-8'>
             <CheckoutWrapper title='User Information'>
               {profileData(profile).map((item) => (
                 <TextInfo {...item} key={item.label} />
               ))}
             </CheckoutWrapper>
-
             <Hr />
-
             <CheckoutWrapper title='Book List'>
               <CartCard className='flex-1 min-w-0'>
                 {loansData.map((cart) => (
@@ -79,13 +76,10 @@ const Checkout = () => {
               </CartCard>
             </CheckoutWrapper>
           </div>
-
-          {/* Kanan: Form Checkout */}
           <div className='flex-1 basis-80'>
             <CheckoutWrapper className='space-y-6'>
               <CheckoutTitle sizeLg>Complete Your Borrow Request</CheckoutTitle>
 
-              {/* Borrow Date (Hari ini) */}
               <ContentWrapper title='Borrow Date'>
                 <Input
                   className='rounded-xl disabled:bg-neutral-200'
@@ -94,7 +88,6 @@ const Checkout = () => {
                 />
               </ContentWrapper>
 
-              {/* Durasi Pinjaman */}
               <ContentWrapper title='Borrow Duration'>
                 <RadioGroup
                   value={selectedDuration}
@@ -120,7 +113,6 @@ const Checkout = () => {
                 )}
               </ContentWrapper>
 
-              {/* Return Date */}
               <ContentWrapper
                 title='Return Date'
                 className='p-4 rounded-[12px] bg-[#F6F9FE]'
@@ -133,7 +125,6 @@ const Checkout = () => {
                 </p>
               </ContentWrapper>
 
-              {/* Terms & Conditions */}
               <div className='space-y-3'>
                 {BORROW_TERMS.map((term) => (
                   <div key={term.id} className='flex items-start gap-3'>
@@ -154,7 +145,6 @@ const Checkout = () => {
                 )}
               </div>
 
-              {/* Tombol Submit */}
               <Button
                 onClick={handleSubmit}
                 disabled={isPending || loansData.length === 0}
