@@ -2,7 +2,7 @@ import { Badge, badgeVariants } from '@/components/ui/badge';
 import { type VariantProps } from 'class-variance-authority';
 import { Card } from '@/components/ui/card';
 import { cn, formatDate } from '@/lib/utils';
-import type { BaseComponentProps, OverdueLoan } from '@/type';
+import type { BaseComponentProps, MeLoan, OverdueLoan } from '@/type';
 import { type ComponentProps } from 'react';
 import dayjs from 'dayjs';
 import { Hr } from '@/components/ui/hr';
@@ -48,7 +48,7 @@ const LOAN_BADGE_VARIANT = {
   OVERDUE: 'outline',
 } as const;
 
-type LoansCardItemProps = { loan: OverdueLoan };
+type LoansCardItemProps = { loan: MeLoan | OverdueLoan };
 
 const LoansCardItem = ({ loan }: LoansCardItemProps) => {
   const { isAdmin } = useUser();
