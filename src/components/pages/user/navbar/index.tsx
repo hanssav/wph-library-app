@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Search } from 'lucide-react';
-import { userMenu } from './navbar.constants';
+import { adminMenu, userMenu } from './navbar.constants';
 import { cn } from '@/lib/utils';
 import {
   DASHBOARD_PATH,
@@ -37,6 +37,7 @@ const UserNavbar = () => {
   const logout = useLogout();
 
   const logoPath = isAdmin ? DASHBOARD_PATH.USER : HOME_PATH;
+  const dropdownMenus = isAdmin ? adminMenu : userMenu;
   return (
     <header className='fixed top-0 w-full z-50 backdrop-blur-md shadow-card'>
       <div className='container-x flex justify-between items-center py-3 md:py-5 gap-4 md:gap-10'>
@@ -91,13 +92,17 @@ const UserNavbar = () => {
               sideOffset={10}
             >
               {isLoggedIn ? (
-                userMenu.map((menu) => (
+                dropdownMenus.map((menu) => (
                   <DropdownMenuLabel
                     onClick={() => {
                       if (menu.id === 'logout') logout();
 
                       const path = menu.path === PROFILE_PATH ? '' : menu.path;
-                      navigate(`${PROFILE_PATH}${path}`);
+                      const finalPath = isAdmin
+                        ? menu.path
+                        : `${PROFILE_PATH}${path}`;
+
+                      navigate(finalPath);
                       setIsOpenMenu(false);
                     }}
                     key={menu.id}

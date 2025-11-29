@@ -1,4 +1,9 @@
-import { BookOpen, MessageSquare, type LucideIcon } from 'lucide-react';
+import {
+  BookOpen,
+  MessageSquare,
+  ShoppingCart,
+  type LucideIcon,
+} from 'lucide-react';
 
 export type EmptyStateType = {
   icon: LucideIcon;
@@ -22,4 +27,10 @@ export const EMPTY_BOOKS_DATA: EmptyStateType = {
   icon: BookOpen,
   title: 'No books found',
   subtitle: 'Try searching with different keywords or add a new book.',
+};
+
+export const EMPTY_CART_DATA: EmptyStateType = {
+  icon: ShoppingCart,
+  title: 'Your cart is empty',
+  subtitle: 'Looks like you haven’t added any books to your cart yet.',
 };
