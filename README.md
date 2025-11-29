@@ -31,7 +31,6 @@
 ### 🎨 User Experience
 
 - **Responsive Design** - Seamless experience across all devices
-- **Smooth Animations** - Powered by Framer Motion
 - **Toast Notifications** - Real-time feedback with Sonner
 - **Image Carousel** - Beautiful book displays with Embla Carousel
 
@@ -225,6 +224,7 @@ library-app/
 
 - Node.js 18+
 - npm or yarn
+  git
 
 ### Installation
 
