@@ -23,7 +23,7 @@ import { useLoansOverdue } from '@/hooks/use-admin';
 
 const AdminBorrowedList = () => {
   const [params, setParams] = React.useState<GetLoansParams>({
-    limit: 2,
+    limit: 20,
     status: undefined,
   });
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
