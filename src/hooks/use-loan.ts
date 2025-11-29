@@ -1,14 +1,16 @@
 import { CHECKOUT_PATH } from '@/constants';
 import { cartService } from '@/service';
 import { loanService } from '@/service/loan.service';
+import type { RootState } from '@/store';
 import type { LoanBookRequest, LoanBookResponse } from '@/type';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'sonner';
 
 export const useLoanBooks = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const book = useSelector((state: RootState) => state.bookLoans.datas);
 
   return useMutation({
     mutationFn: async (payload: {
@@ -23,7 +25,9 @@ export const useLoanBooks = () => {
         results.push(res);
       }
 
-      await Promise.all(cartItemIds.map((id) => cartService.removeId(id)));
+      if ('book' in book) {
+        await Promise.all(cartItemIds.map((id) => cartService.removeId(id)));
+      }
 
       return results;
     },
@@ -32,10 +36,6 @@ export const useLoanBooks = () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       queryClient.invalidateQueries({ queryKey: ['me'] });
       navigate(`${CHECKOUT_PATH}/success`);
-    },
-
-    onError: (error: any) => {
-      toast.error(error?.message || 'Gagal meminjam buku');
     },
   });
 };
